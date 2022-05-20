@@ -8,6 +8,7 @@ services:
     environment:
       POSTGRES_USER: DOE_APP
       POSTGRES_PASSWORD: Qwerty
+      POSTGRES_DATABASE: DOE_APP
     volumes:
       - pg-data:/var/lib/postgresql/data
     ports:
