@@ -1,11 +1,11 @@
 import React from 'react';
-import HomePage from './Pages/HomePage';
+import NewDonationPage from './Pages/NewDonationPage';
 import GlobalStyle from './styles/globalStyles';
 
 const App = () => (
   <>
     <GlobalStyle />
-    <HomePage />
+    <NewDonationPage />
   </>
 );
 
