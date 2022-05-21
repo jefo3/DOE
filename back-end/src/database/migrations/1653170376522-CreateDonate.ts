@@ -1,11 +1,16 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
-export class CreateUsers1653006141506 implements MigrationInterface {
+export class CreateDonate1653170376522 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
     await queryRunner.createTable(
       new Table({
-        name: 'users',
+        name: 'donates',
         columns: [
           {
             name: 'id',
@@ -15,21 +20,17 @@ export class CreateUsers1653006141506 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'name',
+            name: 'title',
             type: 'varchar',
           },
           {
-            name: 'surname',
+            name: 'description',
             type: 'varchar',
           },
           {
-            name: 'email',
-            type: 'varchar',
-            isUnique: true,
-          },
-          {
-            name: 'password',
-            type: 'varchar',
+            name: 'user_id',
+            type: 'uuid',
+            isNullable: false,
           },
           {
             name: 'created_at',
@@ -44,9 +45,22 @@ export class CreateUsers1653006141506 implements MigrationInterface {
         ],
       }),
     );
+
+    await queryRunner.createForeignKey(
+      'donates',
+      new TableForeignKey({
+        name: 'relation_id_of_user',
+        columnNames: ['user_id'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'users',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      }),
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('users');
+    await queryRunner.dropForeignKey('donates', 'relation_id_of_user');
+    await queryRunner.dropTable('donates');
   }
 }
