@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
+import users from './users.routes';
+
 const routes = Router();
 
-routes.get('/', async (request, response) => {
-  return response.json({ teste: 'teste' });
-});
+routes.use('/users', users);
 
 export default routes;
