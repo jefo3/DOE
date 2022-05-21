@@ -6,7 +6,6 @@ import './database';
 const app = express();
 
 app.use(express.json());
-
-app.get('/', routes);
+app.use(routes);
 
 export default app;
