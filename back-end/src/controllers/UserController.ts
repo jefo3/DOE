@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 
-import CreateUserService from '../services/CreateUserService';
-import UpdateUserService from '../services/UpdateUserService';
-import DeleteUserService from '../services/DeleteUserService';
-import ListUserService from '../services/ListUserService';
+import CreateUserService from '../services/user/CreateUserService';
+import UpdateUserService from '../services/user/UpdateUserService';
+import DeleteUserService from '../services/user/DeleteUserService';
+import ListUserService from '../services/user/ListUserService';
 
 class UserController {
   async create(request: Request, response: Response) {

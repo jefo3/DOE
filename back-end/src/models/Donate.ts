@@ -9,8 +9,10 @@ import {
   OneToMany,
 } from 'typeorm';
 
-@Entity('Users')
-class User {
+import User from './User';
+
+@Entity('donates')
+class Donate {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -34,4 +36,4 @@ class User {
   updated_at: Date;
 }
 
-export default User;
+export default Donate;
