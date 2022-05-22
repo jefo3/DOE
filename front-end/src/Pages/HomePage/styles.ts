@@ -136,6 +136,7 @@ const GridItem = styled.div`
     display: flex;
     flex-direction: column;
     width: 200px;
+    height: 300px;
     background-color: #fff;
     border-radius: 10px;
     justify-self: center;
@@ -156,16 +157,28 @@ const ImageContainer = styled.div`
 `;
 
 const ItemInfo = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
     border-top: 1px solid #ddd;
     padding: 10px;
+    gap: 8px;
+
+    div:nth-of-type(3){
+        margin: auto 0 5px; 
+
+        span{
+            font-size: 12px;
+        }
+    }
 `;
 
 const Info = styled.div`
     display: flex;
     align-items: center;
     color: #273B4A;
-    gap: 5px;
-    margin: 5px 0 10px;
+    gap: 10px;
 
     span{
         font-size: 14px;

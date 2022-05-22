@@ -3,7 +3,7 @@ import React from 'react';
 import { FaUserCircle, FaUserAlt, FaSearch } from 'react-icons/fa';
 import { RiLogoutBoxFill } from 'react-icons/ri';
 import { IoMdHome } from 'react-icons/io';
-import { AiFillPlusCircle, AiFillShopping } from 'react-icons/ai';
+import { AiFillClockCircle, AiFillPlusCircle, AiFillShopping } from 'react-icons/ai';
 import { GoTriangleRight } from 'react-icons/go';
 
 import {
@@ -79,20 +79,9 @@ const HomePage: React.FC = () => {
               <GoTriangleRight size="14px" />
               <span>Roupas</span>
             </Info>
-          </ItemInfo>
-        </GridItem>
-        <GridItem>
-          <ImageContainer>
-            <img src={Shirt} alt="Shirt" />
-          </ImageContainer>
-          <ItemInfo>
             <Info>
-              <AiFillShopping size="14px" />
-              <span>Camisa polo masculina</span>
-            </Info>
-            <Info>
-              <GoTriangleRight size="14px" />
-              <span>Roupas</span>
+              <AiFillClockCircle size="14px" />
+              <span>Publicado em 13/04/2022</span>
             </Info>
           </ItemInfo>
         </GridItem>
@@ -109,20 +98,9 @@ const HomePage: React.FC = () => {
               <GoTriangleRight size="14px" />
               <span>Roupas</span>
             </Info>
-          </ItemInfo>
-        </GridItem>
-        <GridItem>
-          <ImageContainer>
-            <img src={Shirt} alt="Shirt" />
-          </ImageContainer>
-          <ItemInfo>
             <Info>
-              <AiFillShopping size="14px" />
-              <span>Camisa polo masculina</span>
-            </Info>
-            <Info>
-              <GoTriangleRight size="14px" />
-              <span>Roupas</span>
+              <AiFillClockCircle size="14px" />
+              <span>Publicado em 13/04/2022</span>
             </Info>
           </ItemInfo>
         </GridItem>
@@ -139,6 +117,10 @@ const HomePage: React.FC = () => {
               <GoTriangleRight size="14px" />
               <span>Roupas</span>
             </Info>
+            <Info>
+              <AiFillClockCircle size="14px" />
+              <span>Publicado em 13/04/2022</span>
+            </Info>
           </ItemInfo>
         </GridItem>
         <GridItem>
@@ -153,6 +135,10 @@ const HomePage: React.FC = () => {
             <Info>
               <GoTriangleRight size="14px" />
               <span>Roupas</span>
+            </Info>
+            <Info>
+              <AiFillClockCircle size="14px" />
+              <span>Publicado em 13/04/2022</span>
             </Info>
           </ItemInfo>
         </GridItem>

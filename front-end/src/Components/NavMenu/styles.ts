@@ -5,6 +5,10 @@ export const Container = styled.nav`
     justify-content: center;
     gap: 50px;
     padding: 20px 0;
+
+    a{
+        text-decoration: none;
+    }
 `;
 
 export const Item = styled.div`
