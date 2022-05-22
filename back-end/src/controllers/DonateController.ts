@@ -9,7 +9,7 @@ class DonateController {
   async create(request: Request, response: Response) {
     try {
       const { title, description } = request.body;
-      const { user_id } = request.params;
+      const { id: user_id } = request.user;
 
       const donate = await new CreateDonateService().execute({
         title,
@@ -56,7 +56,7 @@ class DonateController {
 
   async list(request: Request, response: Response) {
     try {
-      const { user_id } = request.params;
+      const { id: user_id } = request.user;
       const donates = await new ListDonateService().execute(user_id);
 
       return response.json(donates);
