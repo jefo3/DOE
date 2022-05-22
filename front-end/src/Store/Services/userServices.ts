@@ -1,10 +1,10 @@
-import { ICreateUser, IUser } from "../Interfaces/userInterfaces";
+import { ICreateUser, IUser, ISession } from "../Interfaces/userInterfaces";
 import { apiAuth, apiDelete, apiGet, apiLogOut, apiPost } from "./api";
 
 const USER_ROUTER = 'users/';
 
 export const LoginUser = async (email: string, password: string) =>{
-    return apiAuth<IUser>(USER_ROUTER+'/login', {email, password});
+    return apiAuth<ISession>('/sessions', {email, password});
 }
 
 export const LogOutUser = async () =>{

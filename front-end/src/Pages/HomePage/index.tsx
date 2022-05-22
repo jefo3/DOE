@@ -38,7 +38,6 @@ const HomePage: React.FC = () => {
         <NavLinks>
         <NavLink to="/">
           <LinkItem>
-
             <IoMdHome size="32px" />
               Home
           </LinkItem>

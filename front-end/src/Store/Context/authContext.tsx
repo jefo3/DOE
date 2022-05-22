@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { IUser } from '../Interfaces/userInterfaces';
-import { setTokenApi } from '../Services/api';
-import { LoginUser, LogOutUser } from '../Services/userServices';
+import api, { setTokenApi } from '../Services/api';
+import { LoginUser } from '../Services/userServices';
 
 interface IAuthContextUser {
   user?: IUser;
   signed: boolean;
   Login(email: string, password: string): Promise<void>;
-  LogOut(): Promise<boolean>;
+  LogOut(): void;
 }
 
 const AuthContext = createContext<IAuthContextUser>({} as IAuthContextUser);
@@ -26,15 +26,15 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
   const Login = (email: string, password: string) => {
     return LoginUser(email, password).then((response)=>{
-      setUser(response);
+      setUser(response.user);
     });
   }
 
   const LogOut = () => {
-    return LogOutUser().then((response)=>{
       setUser(undefined);
-      return response;
-    });
+      localStorage.removeItem("@App:user");
+      localStorage.removeItem("@App:token");
+      delete api.defaults.headers.common["Authorization"]
   }
   
   useEffect(() => {

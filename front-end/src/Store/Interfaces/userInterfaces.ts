@@ -8,3 +8,8 @@ export interface ICreateUser {
 export interface IUser extends ICreateUser{
     id: string;
 }
+
+export interface ISession{
+    user: IUser,
+    token: string,
+}

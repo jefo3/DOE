@@ -40,9 +40,9 @@ export const apiPost = <T>(link: string, resquest?: T) =>{
 }
 
 export const apiAuth = <T>(link: string, resquest: {email: string, password: string}) =>{
-    return api.post(link, {resquest}).then((response)=>{
+    return api.post(link, resquest).then((response)=>{
         if (response.status === 200){
-            localStorage.setItem('@App:user', JSON.stringify(response.data));
+            localStorage.setItem('@App:user', JSON.stringify(response.data.user));
             localStorage.setItem('@App:token', response.data.token);
             setTokenApi(response.data.token);
             return response.data as T;
