@@ -1,12 +1,13 @@
 import React from 'react';
-import NewDonationPage from './Pages/NewDonationPage';
+import Routes from './Routes';
+import { AuthProvider } from './Store/Context/authContext';
 import GlobalStyle from './styles/globalStyles';
 
 const App = () => (
-  <>
+  <AuthProvider>
     <GlobalStyle />
-    <NewDonationPage />
-  </>
+    <Routes />
+  </AuthProvider>
 );
 
 export default App;

@@ -15,15 +15,20 @@ import {
 import Input from '../../Components/Input';
 
 import Shirt from '../../Images/shirt.png';
+import { useAuth } from '../../Store/Context/authContext';
+import { NavLink } from 'react-router-dom';
 
-const HomePage: React.FC = () => (
+const HomePage: React.FC = () => {
+  const context = useAuth();
+  
+  return(
   <Container>
     <UserMenu>
       <UserInfo>
         <FaUserCircle color="#273B4A" size="22px" />
-        <span>Olá, João. Seja bem-vindo!</span>
+        <span>Olá, {context.user?.name}. Seja bem-vindo(a)!</span>
       </UserInfo>
-      <Logout>
+      <Logout onClick={() => context.LogOut()}>
         <RiLogoutBoxFill size="30px" color="#273B4A" />
         <span>Log out</span>
       </Logout>
@@ -31,24 +36,26 @@ const HomePage: React.FC = () => (
     <Content>
       <NavWrapper>
         <NavLinks>
+        <NavLink to="/">
           <LinkItem>
+
             <IoMdHome size="32px" />
-            <a href="#home">
               Home
-            </a>
           </LinkItem>
+          </NavLink>
+
           <LinkItem>
             <FaUserAlt size="28px" />
             <a href="#info">
               Info de Usuário
             </a>
           </LinkItem>
+          <NavLink to="/newdonation">
           <LinkItem>
             <AiFillPlusCircle size="28px" />
-            <a href="#newdonation">
               Nova Doação
-            </a>
           </LinkItem>
+          </NavLink>
         </NavLinks>
         <form autoComplete="off">
           <Input
@@ -153,6 +160,6 @@ const HomePage: React.FC = () => (
       </GridWrapper>
     </Content>
   </Container>
-);
+)};
 
 export default HomePage;
