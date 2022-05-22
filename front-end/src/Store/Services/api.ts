@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://localhost:3333',
+    baseURL: 'http://localhost:3333',
 });
    
 export default api;
@@ -29,7 +29,7 @@ export const apiGet = <T>(link: string) =>{
 }
 
 export const apiPost = <T>(link: string, resquest?: T) =>{
-    return api.post(link, {resquest}).then((response)=>{
+    return api.post(link, resquest).then((response)=>{
         if (response.status === 200){
             return true;
         }
