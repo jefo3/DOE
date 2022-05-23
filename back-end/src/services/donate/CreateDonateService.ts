@@ -6,6 +6,7 @@ interface Request {
   title: string;
   description: string;
   user_id: string;
+  tag_id: string;
 }
 
 class CreateDonateService {
@@ -13,6 +14,7 @@ class CreateDonateService {
     title,
     description,
     user_id,
+    tag_id,
   }: Request): Promise<Donate> {
     const donateRepository = getRepository(Donate);
 
@@ -20,6 +22,7 @@ class CreateDonateService {
       title,
       description,
       user_id,
+      tag_id,
     });
 
     await donateRepository.save(donate);

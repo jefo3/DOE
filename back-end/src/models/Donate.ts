@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 
 import User from './User';
+import Tag from './Tag';
 
 @Entity('donates')
 class Donate {
@@ -25,9 +26,16 @@ class Donate {
   @Column()
   user_id: string;
 
+  @Column()
+  tag_id: string;
+
   @JoinColumn({ name: 'user_id' })
   @OneToMany(() => User, user => user.id)
   user: User;
+
+  @JoinColumn({ name: 'tag_id' })
+  @OneToOne(() => Tag, tag => tag.id)
+  tag: Tag;
 
   @CreateDateColumn()
   created_at: Date;

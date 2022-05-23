@@ -6,11 +6,17 @@ import Donate from '../../models/Donate';
 interface Request {
   title?: string;
   description?: string;
+  tag_id?: string;
   id: string;
 }
 
 class UpdateDonateService {
-  public async execute({ title, description, id }: Request): Promise<Donate> {
+  public async execute({
+    title,
+    description,
+    id,
+    tag_id,
+  }: Request): Promise<Donate> {
     const donateRepository = getRepository(Donate);
 
     const donate = await donateRepository.findOne(id);
@@ -25,6 +31,10 @@ class UpdateDonateService {
 
     if (description) {
       donate.description = description;
+    }
+
+    if (tag_id) {
+      donate.tag_id = tag_id;
     }
 
     await donateRepository.save(donate);

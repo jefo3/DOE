@@ -8,13 +8,14 @@ import ListDonateService from '../services/donate/ListDonateService';
 class DonateController {
   async create(request: Request, response: Response) {
     try {
-      const { title, description } = request.body;
+      const { title, description, tag_id } = request.body;
       const { id: user_id } = request.user;
 
       const donate = await new CreateDonateService().execute({
         title,
         description,
         user_id,
+        tag_id,
       });
 
       return response.json(donate);
@@ -25,13 +26,14 @@ class DonateController {
 
   async update(request: Request, response: Response) {
     try {
-      const { title, description } = request.body;
+      const { title, description, tag_id } = request.body;
       const { id } = request.params;
 
       const donateUpdate = await new UpdateDonateService().execute({
         title,
         description,
         id,
+        tag_id,
       });
 
       return response.json(donateUpdate);
