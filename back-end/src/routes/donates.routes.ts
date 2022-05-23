@@ -13,4 +13,7 @@ donates.get('/', donateController.list);
 donates.put('/:id', donateController.update);
 donates.delete('/:id', donateController.delete);
 
+donates.get('/feed', donateController.listAll);
+donates.get('/feed/:tag_id', donateController.filterTag);
+
 export default donates;

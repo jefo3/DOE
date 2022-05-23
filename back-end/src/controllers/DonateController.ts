@@ -4,6 +4,8 @@ import CreateDonateService from '../services/donate/CreateDonateService';
 import UpdateDonateService from '../services/donate/UpdateDonateService';
 import DeleteDonateService from '../services/donate/DeleteDonateService';
 import ListDonateService from '../services/donate/ListDonateService';
+import ListAllDonateService from '../services/donate/ListAllDonateService';
+import FilterDonateService from '../services/donate/FilterDonateService';
 
 class DonateController {
   async create(request: Request, response: Response) {
@@ -60,6 +62,27 @@ class DonateController {
     try {
       const { id: user_id } = request.user;
       const donates = await new ListDonateService().execute(user_id);
+
+      return response.json(donates);
+    } catch (error) {
+      return response.status(400).json({ error: (error as Error).message });
+    }
+  }
+
+  async listAll(request: Request, response: Response) {
+    try {
+      const donates = await new ListAllDonateService().execute();
+
+      return response.json(donates);
+    } catch (error) {
+      return response.status(400).json({ error: (error as Error).message });
+    }
+  }
+
+  async filterTag(request: Request, response: Response) {
+    try {
+      const { tag_id } = request.params;
+      const donates = await new FilterDonateService().execute(tag_id);
 
       return response.json(donates);
     } catch (error) {
