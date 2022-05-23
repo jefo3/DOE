@@ -36,19 +36,21 @@ const HomePage: React.FC = () => {
     <Content>
       <NavWrapper>
         <NavLinks>
-        <NavLink to="/">
-          <LinkItem>
-            <IoMdHome size="32px" />
-              Home
-          </LinkItem>
+          <NavLink to="/">
+            <LinkItem>
+              <IoMdHome size="32px" />
+                Home
+            </LinkItem>
           </NavLink>
 
-          <LinkItem>
-            <FaUserAlt size="28px" />
-            <a href="#info">
-              Info de Usuário
-            </a>
-          </LinkItem>
+          <NavLink to="/usermanagement">
+            <LinkItem>
+              <FaUserAlt size="28px" />
+              <a href="#info">
+                Info de Usuário
+              </a>
+            </LinkItem>
+          </NavLink>
           <NavLink to="/newdonation">
           <LinkItem>
             <AiFillPlusCircle size="28px" />

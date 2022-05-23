@@ -15,10 +15,12 @@ const NavMenu = () => (
       </Item>
     </NavLink>
 
-    <Item>
-      <FaUserAlt size="28px" />
-      <span>Info de Usuário</span>
-    </Item>
+    <NavLink to='/usermanagement'>
+      <Item>
+        <FaUserAlt size="28px" />
+        <span>Info de Usuário</span>
+      </Item>
+    </NavLink>
 
     <NavLink to="/newdonation">
       <Item>
