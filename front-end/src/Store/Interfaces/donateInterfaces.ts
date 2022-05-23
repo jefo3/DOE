@@ -2,7 +2,7 @@ export interface ICreatDonate{
     title: string;
     description: string;
     user_id: string;
-    category?:string;
+    tag_id?:string;
     imageURL?: string;
 }
 

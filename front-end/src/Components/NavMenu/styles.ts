@@ -26,9 +26,8 @@ export const Item = styled.div`
         filter: brightness(1.5);
     }
 
-    a{
+    span{
         color: #003957;
-        text-decoration: none;
         font-size: 12px;
     }
 `;
