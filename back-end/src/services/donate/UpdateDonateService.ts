@@ -8,6 +8,7 @@ interface Request {
   description?: string;
   tag_id?: string;
   id: string;
+  status_donate: string;
 }
 
 class UpdateDonateService {
@@ -16,6 +17,7 @@ class UpdateDonateService {
     description,
     id,
     tag_id,
+    status_donate,
   }: Request): Promise<Donate> {
     const donateRepository = getRepository(Donate);
 
@@ -35,6 +37,10 @@ class UpdateDonateService {
 
     if (tag_id) {
       donate.tag_id = tag_id;
+    }
+
+    if (status_donate) {
+      donate.status_donate = status_donate;
     }
 
     await donateRepository.save(donate);

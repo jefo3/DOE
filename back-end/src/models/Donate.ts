@@ -29,6 +29,9 @@ class Donate {
   @Column()
   tag_id: string;
 
+  @Column()
+  status_donate: string;
+
   @JoinColumn({ name: 'user_id' })
   @OneToMany(() => User, user => user.id)
   user: User;

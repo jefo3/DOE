@@ -10,7 +10,7 @@ import FilterDonateService from '../services/donate/FilterDonateService';
 class DonateController {
   async create(request: Request, response: Response) {
     try {
-      const { title, description, tag_id } = request.body;
+      const { title, description, tag_id, status_donate } = request.body;
       const { id: user_id } = request.user;
 
       const donate = await new CreateDonateService().execute({
@@ -18,6 +18,7 @@ class DonateController {
         description,
         user_id,
         tag_id,
+        status_donate,
       });
 
       return response.json(donate);
@@ -28,7 +29,7 @@ class DonateController {
 
   async update(request: Request, response: Response) {
     try {
-      const { title, description, tag_id } = request.body;
+      const { title, description, tag_id, status_donate } = request.body;
       const { id } = request.params;
 
       const donateUpdate = await new UpdateDonateService().execute({
@@ -36,6 +37,7 @@ class DonateController {
         description,
         id,
         tag_id,
+        status_donate,
       });
 
       return response.json(donateUpdate);
