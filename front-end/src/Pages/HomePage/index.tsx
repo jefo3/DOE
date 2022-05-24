@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { FaUserCircle, FaUserAlt, FaSearch } from 'react-icons/fa';
 import { RiLogoutBoxFill } from 'react-icons/ri';
@@ -17,10 +17,27 @@ import Input from '../../Components/Input';
 import Shirt from '../../Images/shirt.png';
 import { useAuth } from '../../Store/Context/authContext';
 import { NavLink } from 'react-router-dom';
+import { getAllDonates } from '../../Store/Services/donateServices';
+import { IDonate } from '../../Store/Interfaces/donateInterfaces';
 
 const HomePage: React.FC = () => {
   const context = useAuth();
+  const [donates, setDonates] = useState<Array<IDonate>>();
   
+  const retrievingDonates = () => {
+    try {
+      return getAllDonates().then(response => {
+        setDonates(response);
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    retrievingDonates();
+  }, []);
+
   return(
   <Container>
     <UserMenu>
@@ -42,19 +59,16 @@ const HomePage: React.FC = () => {
                 Home
             </LinkItem>
           </NavLink>
-
           <NavLink to="/usermanagement">
             <LinkItem>
               <FaUserAlt size="28px" />
-              <a href="#info">
-                Info de Usuário
-              </a>
+              Info de Usuário
             </LinkItem>
           </NavLink>
           <NavLink to="/newdonation">
           <LinkItem>
             <AiFillPlusCircle size="28px" />
-              Nova Doação
+            Nova Doação
           </LinkItem>
           </NavLink>
         </NavLinks>
@@ -68,82 +82,29 @@ const HomePage: React.FC = () => {
         </form>
       </NavWrapper>
       <GridWrapper>
-        <GridItem>
-          <ImageContainer>
-            <img src={Shirt} alt="Shirt" />
-          </ImageContainer>
-          <ItemInfo>
-            <Info>
-              <AiFillShopping size="14px" />
-              <span>Camisa polo masculina</span>
-            </Info>
-            <Info>
-              <GoTriangleRight size="14px" />
-              <span>Roupas</span>
-            </Info>
-            <Info>
-              <AiFillClockCircle size="14px" />
-              <span>Publicado em 13/04/2022</span>
-            </Info>
-          </ItemInfo>
-        </GridItem>
-        <GridItem>
-          <ImageContainer>
-            <img src={Shirt} alt="Shirt" />
-          </ImageContainer>
-          <ItemInfo>
-            <Info>
-              <AiFillShopping size="14px" />
-              <span>Camisa polo masculina</span>
-            </Info>
-            <Info>
-              <GoTriangleRight size="14px" />
-              <span>Roupas</span>
-            </Info>
-            <Info>
-              <AiFillClockCircle size="14px" />
-              <span>Publicado em 13/04/2022</span>
-            </Info>
-          </ItemInfo>
-        </GridItem>
-        <GridItem>
-          <ImageContainer>
-            <img src={Shirt} alt="Shirt" />
-          </ImageContainer>
-          <ItemInfo>
-            <Info>
-              <AiFillShopping size="14px" />
-              <span>Camisa polo masculina</span>
-            </Info>
-            <Info>
-              <GoTriangleRight size="14px" />
-              <span>Roupas</span>
-            </Info>
-            <Info>
-              <AiFillClockCircle size="14px" />
-              <span>Publicado em 13/04/2022</span>
-            </Info>
-          </ItemInfo>
-        </GridItem>
-        <GridItem>
-          <ImageContainer>
-            <img src={Shirt} alt="Shirt" />
-          </ImageContainer>
-          <ItemInfo>
-            <Info>
-              <AiFillShopping size="14px" />
-              <span>Camisa polo masculina</span>
-            </Info>
-            <Info>
-              <GoTriangleRight size="14px" />
-              <span>Roupas</span>
-            </Info>
-            <Info>
-              <AiFillClockCircle size="14px" />
-              <span>Publicado em 13/04/2022</span>
-            </Info>
-          </ItemInfo>
-        </GridItem>
+        {
+          donates?.map(donate => 
+            <GridItem key={donate.id}>
+              <ImageContainer>
+                <img src={Shirt} alt="Shirt" />
+              </ImageContainer>
+              <ItemInfo>
+              <Info>
+                <AiFillShopping size="14px" />
+                <span>{donate.title}</span>
+              </Info>
+              <Info>
+                <GoTriangleRight size="14px" />
+                <span>{donate.tag.name}</span>
+              </Info>
+              <Info>
+                <AiFillClockCircle size="14px" />
+                <span>{donate.created_at}</span>
+              </Info>
+            </ItemInfo>
+            </GridItem>
+          )    
+        } 
       </GridWrapper>
     </Content>
   </Container>

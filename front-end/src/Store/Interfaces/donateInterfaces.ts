@@ -8,4 +8,8 @@ export interface ICreatDonate{
 
 export interface IDonate extends ICreatDonate{
     id: string;
+    tag: {
+        name: string;
+    };
+    created_at: string;
 }
