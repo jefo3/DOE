@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { AiOutlineUpload } from 'react-icons/ai';
 
@@ -12,6 +12,9 @@ import Button from '../../Components/Button';
 import { ICreatDonate } from '../../Store/Interfaces/donateInterfaces';
 import { createDonate } from '../../Store/Services/donateServices';
 import { useAuth } from '../../Store/Context/authContext';
+import { ITag } from '../../Store/Interfaces/tagsInterface';
+import { getTags } from '../../Store/Services/tagsServices';
+import { useNavigate } from 'react-router-dom';
 
 const NewDonationPage: React.FC = () => {
   const context = useAuth();
@@ -19,10 +22,12 @@ const NewDonationPage: React.FC = () => {
   const [loadImage, setLoadImage] = useState(false);
   const imagePreview = useRef(document.createElement('img'));
 
-  const [imageURL, setImageURL] = useState<string>();
+  // const [imageURL, setImageURL] = useState<string>();
+  const navigate = useNavigate();
   const [category, setCategory] = useState<string>();
   const [name, setName] = useState<string>();
   const [description, setDescription] = useState<string>();
+  const [tags, setTags] = useState<Array<ITag>>();
 
   const handleRefisterDonate = () =>{
     if(name && description && context.user){
@@ -30,13 +35,13 @@ const NewDonationPage: React.FC = () => {
         title: name,
         description: description,
         user_id: context.user.id,
-        category:category,
-        imageURL:imageURL,
+        tag_id: category,
       }
 
       createDonate(donate).then((response)=>{
         if(response){
-          alert("Cadastrado com sucesso")
+          navigate('/');
+          alert("Cadastrado com sucesso");
         }
       }).catch((error)=>{
         console.log(error);
@@ -56,12 +61,22 @@ const NewDonationPage: React.FC = () => {
       reader.onload = () => {
         const readerResult: string = reader.result as string;
         imagePreview.current.setAttribute('src', readerResult);
-        setImageURL(readerResult);
+        // setImageURL(readerResult);
       };
 
       reader.readAsDataURL(file);
     }
   };
+
+  const retrieveTags = () => {
+    return getTags().then((response)  => {
+      setTags(response);  
+    });
+  }
+
+  useEffect(() => {
+    retrieveTags();
+  }, []);
 
   return (
     <Container>
@@ -81,9 +96,12 @@ const NewDonationPage: React.FC = () => {
             }
           </ImagePreview>
           <select onChange={(e)=> setCategory(e.target.value)}>
-            <option value="">Categoria do Item</option>
-            <option value="objeto">Objeto</option>
-            <option value="roupa">Roupa</option>
+            <option value="">Selecionar categoria</option>
+            {
+              tags?.map(tag => (
+                <option key={tag.id} value={tag.id}>{tag.name}</option>
+              ))
+            }
           </select>
           <InputField>
             <label htmlFor="name">Nome</label>

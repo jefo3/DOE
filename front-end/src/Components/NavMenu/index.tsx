@@ -11,19 +11,21 @@ const NavMenu = () => (
     <NavLink to="/">
       <Item>
         <AiFillHome size="28px" />
-        <a href="#home">Home</a>
+        <span>Home</span>
       </Item>
     </NavLink>
 
-    <Item>
-      <FaUserAlt size="28px" />
-      <a href="#home">Info de Usuário</a>
-    </Item>
+    <NavLink to='/usermanagement'>
+      <Item>
+        <FaUserAlt size="28px" />
+        <span>Info de Usuário</span>
+      </Item>
+    </NavLink>
 
     <NavLink to="/newdonation">
       <Item>
         <AiFillPlusCircle size="28px" />
-        <a href="#home">Nova doação</a>
+        <span>Nova doação</span>
       </Item>
     </NavLink>
   </Container>
