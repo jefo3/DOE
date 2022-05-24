@@ -39,6 +39,17 @@ export const apiPost = <T>(link: string, resquest?: T) =>{
     });
 }
 
+export const apiUpdate = <T>(link: string, resquest?: T) =>{
+    return api.put(link, resquest).then((response)=>{
+        if (response.status === 200){
+            return true;
+        }
+        throw response.status;
+    }).catch((error)=>{
+        throw error;
+    });
+}
+
 export const apiAuth = <T>(link: string, resquest: {email: string, password: string}) =>{
     return api.post(link, resquest).then((response)=>{
         if (response.status === 200){

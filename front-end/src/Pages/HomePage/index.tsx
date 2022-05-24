@@ -15,10 +15,15 @@ import {
 import Input from '../../Components/Input';
 
 import Shirt from '../../Images/shirt.png';
+
 import { useAuth } from '../../Store/Context/authContext';
 import { NavLink } from 'react-router-dom';
 import { getAllDonates } from '../../Store/Services/donateServices';
 import { IDonate } from '../../Store/Interfaces/donateInterfaces';
+
+import moment from 'moment';
+import 'moment/locale/pt-br';
+moment.locale('pt-br');
 
 const HomePage: React.FC = () => {
   const context = useAuth();
@@ -32,6 +37,10 @@ const HomePage: React.FC = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleConvertTime = (time: any) => {
+    return moment(time).fromNow();
   };
 
   useEffect(() => {
@@ -99,7 +108,7 @@ const HomePage: React.FC = () => {
               </Info>
               <Info>
                 <AiFillClockCircle size="14px" />
-                <span>{donate.created_at}</span>
+                <span>Publicado {handleConvertTime(donate.created_at)} atrás</span>
               </Info>
             </ItemInfo>
             </GridItem>

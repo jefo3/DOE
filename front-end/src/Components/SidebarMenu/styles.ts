@@ -31,11 +31,13 @@ export const MenuNavItem = styled.div`
     align-items: center;
     
     margin: 5px 0;
-    padding: 10px 0;
+    padding: 15px 5px;
     gap: 15px;
     
     color: #003957;
-    border-right: 4px solid #003957;
+    background-color: inherit;
+
+    transition: background 250ms ease;
     
     a{
         text-decoration: none;
@@ -44,10 +46,18 @@ export const MenuNavItem = styled.div`
         margin-top: 2px;
     }
 
+    &:nth-child(3){
+        border-right: 4px solid #003957;
+    }
+
     &:last-child{
         border: none;
         gap: 5px;
         margin-top: auto;
         margin-bottom: 20px;
+    }
+
+    &:hover{
+        background-color: #E3E3E3;
     }
 `;
