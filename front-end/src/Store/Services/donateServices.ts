@@ -12,7 +12,7 @@ export const getDonatesByIdUser = (idUser: string) =>{
 }
 
 export const getAllDonates = () => {
-    return apiGet<Array<IDonate>>(DONATES_ROUTER);
+    return apiGet<Array<IDonate>>(DONATES_ROUTER+'/feed');
 };
 
 export const deleteDonate = (idDonate: string) =>{
