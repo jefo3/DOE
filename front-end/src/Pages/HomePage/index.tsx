@@ -117,7 +117,7 @@ const HomePage: React.FC = () => {
               </Info>
               <Info>
                 <AiFillClockCircle size="14px" />
-                <span>Publicado {handleConvertTime(donate.created_at)}</span>
+                <span>Publicado em {handleConvertTime(donate.created_at)}</span>
               </Info>
             </ItemInfo>
             </GridItem>

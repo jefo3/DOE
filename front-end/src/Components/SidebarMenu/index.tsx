@@ -6,7 +6,11 @@ import { RiFileList2Fill, RiLogoutBoxFill } from 'react-icons/ri';
 
 import { Container, MenuNavItem, MenuNavWrapper } from './styles';
 
+import { useAuth } from '../../Store/Context/authContext';
+
 const SidebarMenu: React.FC = () => {
+  const { LogOut } = useAuth();
+
   return(
     <Container>
         <h1>Perfil do Usuário</h1>
@@ -25,7 +29,7 @@ const SidebarMenu: React.FC = () => {
             </MenuNavItem>
             <MenuNavItem>
                 <RiLogoutBoxFill size="28" />
-                <a href='#userinfo'>LogOut</a>
+                <a href="#logout" onClick={LogOut}>LogOut</a>
             </MenuNavItem>
         </MenuNavWrapper>
     </Container>

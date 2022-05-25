@@ -19,7 +19,7 @@ import { format, parseISO } from 'date-fns';
 
 const UserItemManagement: React.FC = () => {
 
-    const [userDonations, setUserDonations] = useState<Array<IDonate>>();
+    const [userDonations, setUserDonations] = useState<Array<IDonate>>([]);
     const [donationItem, setDonationItem] = useState<IDonate>();
     const [openModal, setOpenModal] = useState(false);
 
