@@ -6,6 +6,7 @@ class ListAllDonateService {
   public async execute(): Promise<Donate[]> {
     const donateRepository = getRepository(Donate);
     const donates = await donateRepository.find({
+      where: { status_donate: 'pending' },
       relations: ['tag'],
     });
 

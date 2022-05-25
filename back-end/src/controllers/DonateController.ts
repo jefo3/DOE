@@ -10,8 +10,9 @@ import FilterDonateService from '../services/donate/FilterDonateService';
 class DonateController {
   async create(request: Request, response: Response) {
     try {
-      const { title, description, tag_id, status_donate } = request.body;
+      const { title, description, tag_id } = request.body;
       const { id: user_id } = request.user;
+      const status_donate = 'pending';
 
       const donate = await new CreateDonateService().execute({
         title,
