@@ -6,13 +6,15 @@ import { BsPencilFill } from 'react-icons/bs';
 import NavMenu from '../../Components/NavMenu';
 import SidebarMenu from '../../Components/SidebarMenu';
 import { IDonate } from '../../Store/Interfaces/donateInterfaces';
-import { deleteDonate, getDonatesByIdUser } from '../../Store/Services/donateServices';
+import { deleteDonate, getDonatesByIdUser, updateDonateStatus } from '../../Store/Services/donateServices';
 
 import { Container, Content, MainContent, DonationItem, IconsMenu } from './styles';
 
 import moment from 'moment';
 import 'moment/locale/pt-br';
 import EditModal from '../../Components/EditModal';
+import { RiTimeFill } from 'react-icons/ri';
+import { motion } from 'framer-motion';
 moment.locale('pt-br');
 
 const UserItemManagement: React.FC = () => {
@@ -44,12 +46,30 @@ const UserItemManagement: React.FC = () => {
         }
     };
 
+    const handleUpdateItemStatus = (donationId: string, donationStatus: string) => {
+        if (donationStatus === 'pending'){
+            const status_donate = 'success';
+            updateDonateStatus(donationId, status_donate);
+            document.location.reload();
+        }else{
+            const status_donate = 'pending';
+            updateDonateStatus(donationId, status_donate);
+            document.location.reload();
+        }
+    };
+
     useEffect(() => {
         retrievingUserDonations();
     }, []);
 
     return (
-        <Container>
+        <Container
+            as={motion.div} 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition= {{ delay: 0.25 }}
+        >
             <NavMenu />
             <Content>
                 <SidebarMenu />
@@ -73,7 +93,11 @@ const UserItemManagement: React.FC = () => {
                                         }}
                                         color="#2E69C2" 
                                     />
-                                    <AiFillCheckCircle color="#019006" />
+                                    {
+                                        userDonation.status_donate === 'pending' ? 
+                                        <RiTimeFill onClick={() => handleUpdateItemStatus(userDonation.id, userDonation.status_donate)} color='#ff9500' /> 
+                                        : <AiFillCheckCircle onClick={() => handleUpdateItemStatus(userDonation.id, userDonation.status_donate)} color="#019006" />
+                                    }
                                 </IconsMenu>
                             </DonationItem>
                         ))

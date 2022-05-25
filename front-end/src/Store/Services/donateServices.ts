@@ -19,6 +19,10 @@ export const updateDonate = (donateId: string, name: string, description: string
     return apiUpdate(DONATES_ROUTER+donateId, {title: name, description});
 }
 
+export const updateDonateStatus = (donateId: string, status_donate: string) => {
+    return apiUpdate(DONATES_ROUTER+donateId, { status_donate });
+}
+
 export const deleteDonate = (idDonate: string) =>{
     return apiDelete(DONATES_ROUTER+idDonate);
 }

@@ -184,6 +184,10 @@ const Info = styled.div`
         font-size: 14px;
         font-weight: 700;
     }
+
+    span:first-of-type{
+        font-size: 13px;
+    }
 `;
 
 export {

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
 import { AiFillGift, AiFillMail, AiFillEye } from 'react-icons/ai';
 import { BsFillKeyFill } from 'react-icons/bs';
@@ -12,6 +12,7 @@ import {
 } from './styles';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../Store/Context/authContext';
+import { motion } from 'framer-motion';
 
 const LoginPage: React.FC = () => {
   const context = useAuth();
@@ -28,7 +29,13 @@ const LoginPage: React.FC = () => {
   }
 
   return(
-  <Container>
+  <Container 
+    as={motion.div} 
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition= {{ delay: 0.25 }} 
+  >
     <BackgroundImage />
     <Form onSubmit={(e)=> e.preventDefault()}>
       <h1>Doe</h1>

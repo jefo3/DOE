@@ -15,6 +15,7 @@ import { useAuth } from '../../Store/Context/authContext';
 import { ITag } from '../../Store/Interfaces/tagsInterface';
 import { getTags } from '../../Store/Services/tagsServices';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const NewDonationPage: React.FC = () => {
   const context = useAuth();
@@ -79,7 +80,13 @@ const NewDonationPage: React.FC = () => {
   }, []);
 
   return (
-    <Container>
+    <Container
+      as={motion.div} 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition= {{ delay: 0.25 }}
+    >
       <NavMenu />
       <Content>
         <h1>Nova Doação</h1>

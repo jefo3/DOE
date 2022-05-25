@@ -9,6 +9,7 @@ import Button from '../Button';
 
 import { IDonate } from '../../Store/Interfaces/donateInterfaces';
 import { updateDonate } from '../../Store/Services/donateServices';
+import { motion } from 'framer-motion';
 
 interface IEditModalProps{
   donationItem: IDonate | undefined;
@@ -29,7 +30,13 @@ const EditModal: React.FC<IEditModalProps> = ({ donationItem, setOpenModal, retr
   };
   
   return (
-    <Container>
+    <Container
+      as={motion.div} 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition= {{ delay: 0.25 }}
+    >
         <Form autoComplete='off' onSubmit={handleOnSubmit}>
             <AiFillCloseCircle 
               onClick={() => setOpenModal(false)} 

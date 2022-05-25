@@ -23,6 +23,7 @@ import { IDonate } from '../../Store/Interfaces/donateInterfaces';
 
 import moment from 'moment';
 import 'moment/locale/pt-br';
+import { motion } from 'framer-motion';
 moment.locale('pt-br');
 
 const HomePage: React.FC = () => {
@@ -48,7 +49,13 @@ const HomePage: React.FC = () => {
   }, []);
 
   return(
-  <Container>
+  <Container
+    as={motion.div} 
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition= {{ delay: 0.25 }}
+  >
     <UserMenu>
       <UserInfo>
         <FaUserCircle color="#273B4A" size="22px" />
