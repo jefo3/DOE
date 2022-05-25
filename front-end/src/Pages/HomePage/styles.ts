@@ -135,7 +135,7 @@ const GridWrapper = styled.div`
 const GridItem = styled.div`
     display: flex;
     flex-direction: column;
-    width: 200px;
+    width: 220px;
     height: 300px;
     background-color: #fff;
     border-radius: 10px;

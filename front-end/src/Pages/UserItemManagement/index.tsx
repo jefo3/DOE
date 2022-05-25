@@ -10,12 +10,12 @@ import { deleteDonate, getDonatesByIdUser, updateDonateStatus } from '../../Stor
 
 import { Container, Content, MainContent, DonationItem, IconsMenu } from './styles';
 
-import moment from 'moment';
-import 'moment/locale/pt-br';
 import EditModal from '../../Components/EditModal';
 import { RiTimeFill } from 'react-icons/ri';
 import { motion } from 'framer-motion';
-moment.locale('pt-br');
+
+import ptBr from 'date-fns/locale/pt-BR';
+import { format, parseISO } from 'date-fns';
 
 const UserItemManagement: React.FC = () => {
 
@@ -33,8 +33,10 @@ const UserItemManagement: React.FC = () => {
         }
     }
 
-    const handleConvertingDate = (date: string) => {
-        return moment(date).format("DD/MM/YY");
+    const handleConvertingDate = (time: string) => {
+        const date = parseISO(time);
+        const formattedDate = format(date, ' d/LL/y', { locale: ptBr })
+        return formattedDate;
     };
 
     const handleDeleteItem = (donationId: string) => {

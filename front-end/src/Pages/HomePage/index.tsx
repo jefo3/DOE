@@ -21,10 +21,10 @@ import { NavLink } from 'react-router-dom';
 import { getAllDonates } from '../../Store/Services/donateServices';
 import { IDonate } from '../../Store/Interfaces/donateInterfaces';
 
-import moment from 'moment';
-import 'moment/locale/pt-br';
+import { format, parseISO } from 'date-fns';
+import ptBr from 'date-fns/locale/pt-BR';
+
 import { motion } from 'framer-motion';
-moment.locale('pt-br');
 
 const HomePage: React.FC = () => {
   const context = useAuth();
@@ -41,7 +41,9 @@ const HomePage: React.FC = () => {
   };
 
   const handleConvertTime = (time: any) => {
-    return moment(time).fromNow();
+    const date = parseISO(time);
+    const formattedDate = format(date, ' d/LL/y', { locale: ptBr })
+    return formattedDate;
   };
 
   useEffect(() => {
@@ -115,7 +117,7 @@ const HomePage: React.FC = () => {
               </Info>
               <Info>
                 <AiFillClockCircle size="14px" />
-                <span>Publicado {handleConvertTime(donate.created_at)} atrás</span>
+                <span>Publicado {handleConvertTime(donate.created_at)}</span>
               </Info>
             </ItemInfo>
             </GridItem>
