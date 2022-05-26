@@ -56,5 +56,8 @@ BANCO DE DADOS
 ## LINK DO TRELLO
 https://trello.com/b/nV6WwdiN/doe
 
+## LINK Do VÍDEO DA SEGUNDA ENTREGA
+https://www.youtube.com/watch?v=IiQKBljSVvg
+
 ## LiNK DO PROTOTIPO
 Figma: https://www.figma.com/file/HlUOTB3FVvkBPO0lTMw3RC/Doe?node-id=0%3A1
