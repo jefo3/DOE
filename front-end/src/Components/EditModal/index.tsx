@@ -37,32 +37,32 @@ const EditModal: React.FC<IEditModalProps> = ({ donationItem, setOpenModal, retr
       exit={{ opacity: 0 }}
       transition= {{ delay: 0.25 }}
     >
-        <Form autoComplete='off' onSubmit={handleOnSubmit}>
-            <AiFillCloseCircle 
-              onClick={() => setOpenModal(false)} 
+      <Form autoComplete='off' onSubmit={handleOnSubmit}>
+        <AiFillCloseCircle 
+          onClick={() => setOpenModal(false)} 
               size="28px" 
               color="#EE3A3A" 
-            />
-            <h1>Atualizando doação</h1>
-            <InputField>
-                <label htmlFor="name">Nome</label>
-                <Input 
-                  name="name" 
+        />
+        <h1>Atualizando doação</h1>
+        <InputField>
+            <label htmlFor="name">Nome</label>
+              <Input 
+                name="name" 
                   type="text" 
                   defaultValue={donationItem?.title}
-                  onChange={(e) => setName(e.target.value)}
-                />
-            </InputField>
-            <InputField>
-                <label htmlFor="description">Descrição</label>
+                onChange={(e) => setName(e.target.value)}
+              />
+        </InputField>
+        <InputField>
+              <label htmlFor="description">Descrição</label>
                 <textarea 
                   id="description" 
                   defaultValue={donationItem?.description}
                   onChange={(e) => setDescription(e.target.value)} 
                 />
-             </InputField>
-             <Button type='submit'>Atualizar</Button>
-        </Form>
+        </InputField>
+        <Button type='submit'>Atualizar</Button>
+      </Form>
     </Container>
   );
 }

@@ -15,6 +15,10 @@ export const getAllDonates = () => {
     return apiGet<Array<IDonate>>(DONATES_ROUTER+'/feed');
 };
 
+export const getAllSuccessfulDonates = () => {
+    return apiGet<Array<IDonate>>(DONATES_ROUTER+'/feed/success');
+};
+
 export const updateDonate = (donateId: string, name: string, description: string) => {
     return apiUpdate(DONATES_ROUTER+donateId, {title: name, description});
 }

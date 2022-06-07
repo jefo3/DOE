@@ -7,25 +7,30 @@ import { RiFileList2Fill, RiLogoutBoxFill } from 'react-icons/ri';
 import { Container, MenuNavItem, MenuNavWrapper } from './styles';
 
 import { useAuth } from '../../Store/Context/authContext';
+import { Link } from 'react-router-dom';
 
-const SidebarMenu: React.FC = () => {
+interface SidebarMenuProps{
+    pageActive: string;
+}
+
+const SidebarMenu: React.FC<SidebarMenuProps> = ({ pageActive }) => {
   const { LogOut } = useAuth();
 
   return(
     <Container>
         <h1>Perfil do Usuário</h1>
-        <MenuNavWrapper>
+        <MenuNavWrapper pageActive={pageActive}>
             <MenuNavItem>
                 <FaUserAlt size="18px" />
                 <a href='#userinfo'>Informações do usuário</a>
             </MenuNavItem>
             <MenuNavItem>
                 <RiFileList2Fill size="18px" />
-                <a href='#userinfo'>Histórico de doações</a>
+                <Link to='/donationhistory'>Histórico de doações</Link>
             </MenuNavItem>
             <MenuNavItem>
                 <AiFillTag size="18px" />
-                <a href='#userinfo'>Gerenciamento de itens</a>
+                <Link to='/usermanagement'>Gerenciamento de itens</Link>
             </MenuNavItem>
             <MenuNavItem>
                 <RiLogoutBoxFill size="28" />

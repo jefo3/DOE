@@ -74,7 +74,7 @@ const UserItemManagement: React.FC = () => {
         >
             <NavMenu />
             <Content>
-                <SidebarMenu />
+                <SidebarMenu pageActive='userItem'/>
                 <MainContent>
                     <h1>Gerenciamento de itens</h1>
                     {
@@ -90,15 +90,26 @@ const UserItemManagement: React.FC = () => {
                                     /> 
                                     <BsPencilFill 
                                         onClick={() => {
-                                            setOpenModal(true)
-                                            setDonationItem(userDonation)
-                                        }}
-                                        color="#2E69C2" 
+                                                setOpenModal(true)
+                                                setDonationItem(userDonation)
+                                            }}
+                                            color="#2E69C2" 
                                     />
                                     {
                                         userDonation.status_donate === 'pending' ? 
-                                        <RiTimeFill onClick={() => handleUpdateItemStatus(userDonation.id, userDonation.status_donate)} color='#ff9500' /> 
-                                        : <AiFillCheckCircle onClick={() => handleUpdateItemStatus(userDonation.id, userDonation.status_donate)} color="#019006" />
+                                        <RiTimeFill 
+                                            onClick={
+                                                () => handleUpdateItemStatus(userDonation.id, userDonation.status_donate)
+                                            } 
+                                            color='#ff9500' 
+                                        /> 
+                                        : 
+                                        <AiFillCheckCircle 
+                                            onClick={
+                                                () => handleUpdateItemStatus(userDonation.id, userDonation.status_donate)
+                                            } 
+                                            color="#019006" 
+                                        />
                                     }
                                 </IconsMenu>
                             </DonationItem>
