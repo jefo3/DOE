@@ -6,6 +6,7 @@ import NewDonationPage from '../Pages/NewDonationPage';
 import DonationHistory from '../Pages/DonationHistory';
 import UserInfoPage from '../Pages/UserInfoPage';
 import UserItemManagement from '../Pages/UserItemManagement';
+import ExpandedItemPage from '../Pages/ExpandedItemPage';
 
 const OtherRoutes: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const OtherRoutes: React.FC = () => {
         <Route path="/usermanagement" element={<UserItemManagement/>} />
         <Route path="/donationhistory" element={<DonationHistory/>} />
         <Route path="/userinfo" element={<UserInfoPage/>} />
+        <Route path="/expandedItem" element={<ExpandedItemPage/>} />
       </Routes>
     </BrowserRouter>
  );
