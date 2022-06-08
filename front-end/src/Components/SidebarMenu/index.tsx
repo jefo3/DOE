@@ -22,7 +22,7 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({ pageActive }) => {
         <MenuNavWrapper pageActive={pageActive}>
             <MenuNavItem>
                 <FaUserAlt size="18px" />
-                <a href='#userinfo'>Informações do usuário</a>
+                <Link to='/userinfo'>Informações do usuário</Link>
             </MenuNavItem>
             <MenuNavItem>
                 <RiFileList2Fill size="18px" />

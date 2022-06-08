@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import { FaUserCircle, FaUserAlt, FaSearch } from 'react-icons/fa';
 import { RiLogoutBoxFill } from 'react-icons/ri';
@@ -17,18 +18,23 @@ import Input from '../../Components/Input';
 import Shirt from '../../Images/shirt.png';
 
 import { useAuth } from '../../Store/Context/authContext';
-import { NavLink } from 'react-router-dom';
-import { getAllDonates } from '../../Store/Services/donateServices';
-import { IDonate } from '../../Store/Interfaces/donateInterfaces';
+import { getAllDonates, getDonatesByTags } from '../../Store/Services/donateServices';
+import { getTags } from '../../Store/Services/tagsServices';
 
 import { format, parseISO } from 'date-fns';
 import ptBr from 'date-fns/locale/pt-BR';
 
 import { motion } from 'framer-motion';
 
+import { IDonate } from '../../Store/Interfaces/donateInterfaces';
+import { ITag } from '../../Store/Interfaces/tagsInterface';
+import { BiErrorCircle } from 'react-icons/bi';
+
 const HomePage: React.FC = () => {
   const context = useAuth();
   const [donates, setDonates] = useState<Array<IDonate>>();
+  const [tags, setTags] = useState<Array<ITag>>();
+  const [noItems, setNoItems] = useState(false);
   
   const retrievingDonates = () => {
     try {
@@ -40,15 +46,42 @@ const HomePage: React.FC = () => {
     }
   };
 
+  const retrievingTags = async () => {
+    const response = await getTags();
+    setTags(response);
+  }
+
   const handleConvertTime = (time: any) => {
     const date = parseISO(time);
     const formattedDate = format(date, ' d/LL/y', { locale: ptBr })
     return formattedDate;
   };
 
+  const handleSelectOnChange = async (e: any) => {
+    e.preventDefault();
+
+    if (e.target.value === 'all'){
+      retrievingDonates();
+    }else{
+      const tagId = e.target.value;
+      const response = await getDonatesByTags(tagId);
+
+      if (response.length === 0){
+        setNoItems(true);
+      }else{
+        setNoItems(false);
+      }
+
+      setDonates(response);
+    }
+
+  }
+
   useEffect(() => {
     retrievingDonates();
+    retrievingTags();
   }, []);
+
 
   return(
   <Container
@@ -99,30 +132,34 @@ const HomePage: React.FC = () => {
           />
         </form>
       </NavWrapper>
-      <GridWrapper>
-        {
-          donates?.map(donate => 
+      <GridWrapper noItems={noItems}>
+        <select onChange={handleSelectOnChange}>
+          <option value="all">Mostrar todos</option>
+          { tags?.map(tag => (
+            <option key={tag.id} value={tag.id}>{tag.name}</option>
+          )) }
+        </select>
+        { noItems ? <p><BiErrorCircle /> Nenhum item encontrado</p>
+           : donates?.map(donate => 
             <GridItem key={donate.id}>
               <ImageContainer>
                 <img src={Shirt} alt="Shirt" />
               </ImageContainer>
               <ItemInfo>
-              <Info>
-                <AiFillShopping size="14px" />
-                <span>{donate.title}</span>
-              </Info>
-              <Info>
-                <GoTriangleRight size="14px" />
-                <span>{donate.tag.name}</span>
-              </Info>
-              <Info>
-                <AiFillClockCircle size="14px" />
-                <span>Publicado em {handleConvertTime(donate.created_at)}</span>
-              </Info>
-            </ItemInfo>
-            </GridItem>
-          )    
-        } 
+                <Info>
+                  <AiFillShopping size="14px" />
+                  <span>{donate.title}</span>
+                </Info>
+                <Info>
+                  <GoTriangleRight size="14px" />
+                  <span>{donate.tag.name}</span>
+                </Info>
+                <Info>
+                  <AiFillClockCircle size="14px" />
+                  <span>Publicado em {handleConvertTime(donate.created_at)}</span>
+                </Info>
+              </ItemInfo>
+            </GridItem> )}
       </GridWrapper>
     </Content>
   </Container>

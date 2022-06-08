@@ -48,18 +48,18 @@ const EditModal: React.FC<IEditModalProps> = ({ donationItem, setOpenModal, retr
             <label htmlFor="name">Nome</label>
               <Input 
                 name="name" 
-                  type="text" 
-                  defaultValue={donationItem?.title}
+                type="text" 
+                defaultValue={donationItem?.title}
                 onChange={(e) => setName(e.target.value)}
               />
         </InputField>
         <InputField>
               <label htmlFor="description">Descrição</label>
-                <textarea 
-                  id="description" 
-                  defaultValue={donationItem?.description}
-                  onChange={(e) => setDescription(e.target.value)} 
-                />
+              <textarea 
+                id="description" 
+                defaultValue={donationItem?.description}
+                onChange={(e) => setDescription(e.target.value)} 
+              />
         </InputField>
         <Button type='submit'>Atualizar</Button>
       </Form>

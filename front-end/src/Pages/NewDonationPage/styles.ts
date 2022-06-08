@@ -45,6 +45,7 @@ export const Content = styled.div`
             width: 200px;
             padding: 8px;
             border-radius: 5px;
+            background-color: #E3E3E3;
 
             &:focus{
                 outline: none;

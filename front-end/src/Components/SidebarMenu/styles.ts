@@ -40,6 +40,12 @@ export const MenuNavWrapper = styled.div<MenuNavWrapperProps>`
             border-right: 3px solid #003957;
         }
     ` }
+
+    ${ pA => pA.pageActive === 'userInfo' && `
+        div:nth-child(1){
+            border-right: 3px solid #003957;
+        }
+    ` }
 `;
 
 export const MenuNavItem = styled.div`

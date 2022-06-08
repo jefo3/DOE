@@ -6,7 +6,7 @@ import DeleteDonateService from '../services/donate/DeleteDonateService';
 import ListDonateService from '../services/donate/ListDonateService';
 import ListAllDonateService from '../services/donate/ListAllDonateService';
 import FilterDonateService from '../services/donate/FilterDonateService';
-import ListAllSuccessfullDonateService from '../services/donate/ListAllSuccessfullDonateService';
+import ListAllSuccessfullDonateService from '../services/donate/ListAllSuccessfulDonateService';
 
 class DonateController {
   async create(request: Request, response: Response) {

@@ -11,6 +11,10 @@ export const getDonatesByIdUser = () =>{
     return apiGet<Array<IDonate>>(DONATES_ROUTER);
 }
 
+export const getDonatesByTags = (tagId: string) =>{
+    return apiGet<Array<IDonate>>(DONATES_ROUTER+'/feed/'+tagId);
+}
+
 export const getAllDonates = () => {
     return apiGet<Array<IDonate>>(DONATES_ROUTER+'/feed');
 };
