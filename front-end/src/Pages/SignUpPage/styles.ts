@@ -98,6 +98,12 @@ const InputField = styled.div`
         font-weight: 700;
         margin-bottom: 5px;
     }
+
+    small{
+        margin-top: 8px;
+        color: #F05656;
+        font-weight: 600;
+    }
 `;
 
 export {

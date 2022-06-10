@@ -1,4 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import * as yup from 'yup';
 
 import { AiOutlineUpload } from 'react-icons/ai';
 
@@ -9,48 +12,56 @@ import {
 import NavMenu from '../../Components/NavMenu';
 import Input from '../../Components/Input';
 import Button from '../../Components/Button';
+
 import { ICreatDonate } from '../../Store/Interfaces/donateInterfaces';
 import { createDonate } from '../../Store/Services/donateServices';
+
 import { useAuth } from '../../Store/Context/authContext';
+
 import { ITag } from '../../Store/Interfaces/tagsInterface';
 import { getTags } from '../../Store/Services/tagsServices';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+const schema = yup.object().shape({
+  name: yup.string().required("Nome é um campo obrigatório"),
+  description: yup.string().required("Descrição é um campo obrigatório"),
+});
 
 const NewDonationPage: React.FC = () => {
-  const context = useAuth();
+  const { user } = useAuth();
+
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema),
+  })
 
   const [loadImage, setLoadImage] = useState(false);
   const imagePreview = useRef(document.createElement('img'));
 
   // const [imageURL, setImageURL] = useState<string>();
   const navigate = useNavigate();
-  const [category, setCategory] = useState<string>();
-  const [name, setName] = useState<string>();
-  const [description, setDescription] = useState<string>();
   const [tags, setTags] = useState<Array<ITag>>();
+  const [category, setCategory] = useState<string>('');
 
-  const handleRefisterDonate = () =>{
-    if(name && description && context.user){
-      const donate: ICreatDonate = {
-        title: name,
-        description: description,
-        user_id: context.user.id,
-        tag_id: category,
-      }
-
-      createDonate(donate).then((response)=>{
-        if(response){
-          navigate('/');
-          alert("Cadastrado com sucesso");
-        }
-      }).catch((error)=>{
-        console.log(error);
-        alert("Não foi possível cadastrar");
-      })
+  const handleRegisterDonate = (data: any) =>{
+    const donate: ICreatDonate = {
+      title: data.name,
+      description: data.description,
+      user_id: user?.id as string,
+      tag_id: category,
     }
-  }
 
+    createDonate(donate).then((response)=>{
+      if(response){
+        navigate('/');
+        alert("Cadastrado com sucesso");
+      }
+    }).catch((error)=>{
+      console.log(error);
+      alert("Não foi possível cadastrar");
+    })
+  }
+  
   const handleInputFileOnChange = (e: any) => {
     const file = e.target.files[0];
 
@@ -90,7 +101,7 @@ const NewDonationPage: React.FC = () => {
       <NavMenu />
       <Content>
         <h1>Nova Doação</h1>
-        <form autoComplete="off" onSubmit={(e)=> e.preventDefault()}>
+        <form autoComplete="off" onSubmit={handleSubmit(handleRegisterDonate)}>
           <input onChange={handleInputFileOnChange} type="file" id="file" />
           <label htmlFor="file">
             <AiOutlineUpload />
@@ -112,15 +123,22 @@ const NewDonationPage: React.FC = () => {
           </select>
           <InputField>
             <label htmlFor="name">Nome</label>
-            <Input name="name" type="text"
-            onChange={(e)=> setName(e.target.value)} />
+            <Input
+              name="name" 
+              type="text"
+              register={register} 
+            />
+            <small>{errors.name?.message}</small>
           </InputField>
           <InputField>
             <label htmlFor="description">Descrição</label>
-            <textarea id="description" 
-            onChange={(e)=> setDescription(e.target.value)} />
+            <textarea 
+              id="description" 
+              {...register('description', { required: true })}
+            />
+            <small>{errors.description?.message}</small>
           </InputField>
-          <Button onClick={()=>{handleRefisterDonate()}}>Cadastrar</Button>
+          <Button type="submit">Cadastrar</Button>
         </form>
       </Content>
     </Container>

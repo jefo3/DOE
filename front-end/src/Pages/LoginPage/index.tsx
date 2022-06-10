@@ -1,4 +1,10 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+
+import { motion } from 'framer-motion';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import { AiFillGift, AiFillMail, AiFillEye } from 'react-icons/ai';
 import { BsFillKeyFill } from 'react-icons/bs';
@@ -10,22 +16,27 @@ import Button from '../../Components/Button';
 import {
   BackgroundImage, Container, Form, InputField, SignUpSection,
 } from './styles';
-import { NavLink } from 'react-router-dom';
+
 import { useAuth } from '../../Store/Context/authContext';
-import { motion } from 'framer-motion';
+
+const schema = yup.object().shape({
+  email: yup.string().email("Digite um email válido").required("Email é obrigatório"),
+  password: yup.string().required("Senha é obrigatório"),
+})
 
 const LoginPage: React.FC = () => {
   const context = useAuth();
   
-  const [email, setEmail] = useState<string>();
-  const [password, setPassword] = useState<string>();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema),
+  })
+  
+  const [togglePassword, setTogglePassword] = useState(false);
 
-  const handleLogin = () =>{
-    if(email && password){
-      context.Login(email, password).catch((error)=>{
-        console.log('Erro ao fazer Login'+ error);
-      });
-    }
+  const handleOnSubmit = (data: any) => {
+    context.Login(data.email, data.password).catch((error) => {
+      console.log('Erro ao realizar login' +error);
+    });
   }
 
   return(
@@ -37,25 +48,34 @@ const LoginPage: React.FC = () => {
     transition= {{ delay: 0.25 }} 
   >
     <BackgroundImage />
-    <Form onSubmit={(e)=> e.preventDefault()}>
+    <Form onSubmit={handleSubmit(handleOnSubmit)}>
       <h1>Doe</h1>
       <AiFillGift color="#003957" size="62px" />
       <form autoComplete="off">
         <InputField>
           <label htmlFor="email">Email</label>
-          <Input leftIcon={AiFillMail} name="email" type="email"
-          onChange={(e) => setEmail(e.target.value)}/>
+          <Input 
+            leftIcon={AiFillMail} 
+            name="email" 
+            type="email"
+            register={register}
+          />
+          <small>{errors.email?.message}</small>
         </InputField>
         <InputField>
           <label htmlFor="password">Senha</label>
-          <Input leftIcon={BsFillKeyFill} rightIcon={AiFillEye} type="password" name="password" 
-          onChange={(e) => setPassword(e.target.value)}/>
+          <Input 
+            leftIcon={BsFillKeyFill} 
+            rightIcon={AiFillEye} 
+            type={ togglePassword ? 'text' : 'password' } 
+            togglePassword={togglePassword}
+            handleTogglePassword={setTogglePassword}
+            name="password" 
+            register={register}
+          />
+          <small>{errors.password?.message}</small>
         </InputField>
-        <Button type="submit" onClick={() => handleLogin()}>Login</Button>
-        <a href="#f">
-          <FaLock />
-          Perdeu sua senha ?
-        </a>
+        <Button type="submit">Login</Button>
       </form>
       <SignUpSection>
         <span>Não possui sua conta ?</span>

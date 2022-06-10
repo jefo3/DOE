@@ -122,4 +122,11 @@ export const InputField = styled.div`
             box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
         }
     }
+
+    small{
+        margin-top: 8px;
+        text-align: start;
+        font-weight: 600;
+        color: #F05656;
+    }
 `;

@@ -20,16 +20,28 @@ import { getTags } from '../../Store/Services/tagsServices';
 
 
 import { motion } from 'framer-motion';
+import * as yup from 'yup';
 
 import { IDonate } from '../../Store/Interfaces/donateInterfaces';
 import { ITag } from '../../Store/Interfaces/tagsInterface';
 import GridDonationItem from '../../Components/GridDonationItem';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+const schema = yup.object().shape({
+  search: yup.string(),
+})
 
 const HomePage: React.FC = () => {
   const context = useAuth();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema),
+  })
+
   const [donates, setDonates] = useState<Array<IDonate>>();
   const [tags, setTags] = useState<Array<ITag>>();
   const [noItems, setNoItems] = useState(false);
+  
   let navigate = useNavigate();
   
   const retrievingDonates = () => {
@@ -76,7 +88,6 @@ const HomePage: React.FC = () => {
     retrievingTags();
   }, []);
 
-
   return(
   <Container
     as={motion.div} 
@@ -119,10 +130,11 @@ const HomePage: React.FC = () => {
         </NavLinks>
         <form autoComplete="off">
           <Input
-            leftIcon={FaSearch}
-            placeholder="Buscar objeto, bens..."
-            type="text"
             name="search"
+            type="text"
+            placeholder="Buscar objeto, bens..."
+            leftIcon={FaSearch}
+            register={register}
           />
         </form>
       </NavWrapper>

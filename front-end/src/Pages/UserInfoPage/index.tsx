@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
+import * as yup from 'yup';
 
 import { Container, Content, InputField, MainContent } from './styles';
 
@@ -7,17 +8,26 @@ import NavMenu from '../../Components/NavMenu';
 import SidebarMenu from '../../Components/SidebarMenu';
 import Input from '../../Components/Input';
 import Button from '../../Components/Button';
+
 import { useAuth } from '../../Store/Context/authContext';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+const schema = yup.object().shape({
+    name: yup.string().required(),
+    surname: yup.string().required(),
+    email: yup.string().email().required(),
+});
 
 const UserInfoPage: React.FC = () => {
-  const [name, setName] = useState<string>('');
-  const [surname, setSurname] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
   const { user } = useAuth();
 
-  const handleOnSubmit = (e: any) => {
-    e.preventDefault();
-    
+  const { register, handleSubmit } = useForm({
+      resolver: yupResolver(schema),
+  })
+
+  const handleOnSubmit = (data: any) => {
+    console.log(data);
   };
   
   return (
@@ -34,14 +44,14 @@ const UserInfoPage: React.FC = () => {
             <MainContent>
                 <h1>Informações do usuário</h1>
                 <span>{user?.name} {user?.surname}</span>
-                <form autoComplete='off' onSubmit={handleOnSubmit}>
+                <form autoComplete='off' onSubmit={handleSubmit(handleOnSubmit)}>
                     <InputField>
                         <label htmlFor="name">Nome</label>
                         <Input 
                             name="name" 
                             type="text"
                             defaultValue={user?.name}
-                            onChange={(e) => setName(e.target.value)}
+                            register={register}
                         />
                     </InputField>
                     <InputField>
@@ -50,7 +60,7 @@ const UserInfoPage: React.FC = () => {
                             name="surnname" 
                             type="text"
                             defaultValue={user?.surname}
-                            onChange={(e) => setSurname(e.target.value)}
+                            register={register}
                         />
                     </InputField>
                     <InputField>
@@ -59,7 +69,7 @@ const UserInfoPage: React.FC = () => {
                             name="email" 
                             type="email"
                             defaultValue={user?.email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            register={register}
                         />
                     </InputField>
                     <Button type='submit'>Salvar alterações</Button>

@@ -72,6 +72,11 @@ const InputField = styled.div`
         font-size: 14px;
         margin-bottom: 5px;
     }
+
+    small{
+        margin-top: 8px;
+        color: #F05656;
+    }
 `;
 
 const SignUpSection = styled.div`
