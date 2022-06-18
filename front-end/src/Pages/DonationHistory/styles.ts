@@ -11,15 +11,17 @@ export const Container = styled.div`
 
 export const Content = styled.div`
     display: flex;
-    flex: 1;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    padding-left: 360px;
 `;
 
 export const MainContent = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1;
+    align-items: center;
+    justify-content: center;
 
     h1{
         color: #003957;
@@ -30,6 +32,7 @@ export const MainContent = styled.div`
 
     p{
         display: flex;
+        align-items: center;
         margin: 15px 0;
         color: #2E69C2;
         font-size: 22px;
@@ -56,4 +59,4 @@ export const DonationItem = styled.div`
             width: 50%;
         }
     }
-`;   
+`;

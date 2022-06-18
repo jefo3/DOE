@@ -4,13 +4,14 @@ import { motion } from 'framer-motion';
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
-import { Container, Content, MainContent, DonationItem } from './styles';
-
+import { AiFillWarning } from 'react-icons/ai';
+import {
+  Container, Content, MainContent, DonationItem
+} from './styles';
 
 import { IDonate } from '../../Store/Interfaces/donateInterfaces';
 
 import { getAllSuccessfulDonates } from '../../Store/Services/donateServices';
-import { AiFillWarning } from 'react-icons/ai';
 
 const DonationHistory: React.FC = () => {
   const [donationItems, setDonationItems] = useState<Array<IDonate>>();
@@ -22,37 +23,43 @@ const DonationHistory: React.FC = () => {
 
   const handleConvertingDate = (time: string) => {
     const date = parseISO(time);
-    const formattedDate = format(date, ' dd/LL/y', { locale: ptBR })
+    const formattedDate = format(date, ' dd/LL/y', { locale: ptBR });
     return formattedDate;
   };
 
   useEffect(() => {
     retrieveDonationItems();
   }, []);
-  
+
   return (
     <Container
-        as={motion.div} 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition= {{ delay: 0.15 }}
+      as={motion.div}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ delay: 0.15 }}
     >
-        <Content>
-            <MainContent>
-                <h1>Doações realizadas</h1>
-                { donationItems?.length === 0 
-                  ? <p><AiFillWarning />Nenhuma doação realizada!</p> 
-                  : donationItems?.map(item => (
-                    <DonationItem key={item.id}>
-                        <span>{item.title}</span>
-                        <span>{item.tag.name}</span>
-                        <span>{handleConvertingDate(item.updated_at)}</span>
-                    </DonationItem>))}
-            </MainContent>  
-        </Content>
+      <Content>
+        <MainContent>
+          <h1>Doações realizadas</h1>
+          { donationItems?.length === 0
+            ? (
+              <p>
+                <AiFillWarning />
+                Nenhuma doação realizada!
+              </p>
+            )
+            : donationItems?.map((item) => (
+              <DonationItem key={item.id}>
+                <span>{item.title}</span>
+                <span>{item.tag.name}</span>
+                <span>{handleConvertingDate(item.updated_at)}</span>
+              </DonationItem>
+            ))}
+        </MainContent>
+      </Content>
     </Container>
   );
-}
+};
 
 export default DonationHistory;

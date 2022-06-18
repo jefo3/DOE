@@ -8,7 +8,6 @@ import * as yup from 'yup';
 
 import { AiFillGift, AiFillMail, AiFillEye } from 'react-icons/ai';
 import { BsFillKeyFill } from 'react-icons/bs';
-import { FaLock } from 'react-icons/fa';
 
 import Input from '../../Components/Input';
 import Button from '../../Components/Button';

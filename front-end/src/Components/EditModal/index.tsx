@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import { AiFillCloseCircle } from 'react-icons/ai';
 
+import { motion } from 'framer-motion';
 import { Container, Form, InputField } from './styles';
 
 import Input from '../Input';
@@ -9,62 +13,69 @@ import Button from '../Button';
 
 import { IDonate } from '../../Store/Interfaces/donateInterfaces';
 import { updateDonate } from '../../Store/Services/donateServices';
-import { motion } from 'framer-motion';
+
+const schema = yup.object().shape({
+  name: yup.string().required(),
+  description: yup.string().required()
+});
 
 interface IEditModalProps{
   donationItem: IDonate | undefined;
   setOpenModal: (open: boolean) => void;
-  retrievingUserDonations: () => void;
 }
 
-const EditModal: React.FC<IEditModalProps> = ({ donationItem, setOpenModal, retrievingUserDonations }) => {
+const EditModal: React.FC<IEditModalProps> = ({
+  donationItem,
+  setOpenModal
+}) => {
+  const { register, handleSubmit } = useForm({
+    resolver: yupResolver(schema)
+  });
 
-  const [name, setName] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-
-  const handleOnSubmit = (e: any) => {
-    e.preventDefault();
-    updateDonate(donationItem?.id as string, name, description);
+  const onSubmit = (data: any) => {
+    updateDonate(donationItem?.id as string, data.name, data.description);
     setOpenModal(false);
     document.location.reload();
   };
-  
+
   return (
     <Container
-      as={motion.div} 
+      as={motion.div}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition= {{ delay: 0.25 }}
+      transition={{ delay: 0.25 }}
     >
-      <Form autoComplete='off' onSubmit={handleOnSubmit}>
-        <AiFillCloseCircle 
-          onClick={() => setOpenModal(false)} 
-              size="28px" 
-              color="#EE3A3A" 
+
+      <Form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+        <AiFillCloseCircle
+          onClick={() => setOpenModal(false)}
+          size="28px"
+          color="#EE3A3A"
         />
         <h1>Atualizando doação</h1>
         <InputField>
-            <label htmlFor="name">Nome</label>
-              <Input 
-                name="name" 
-                type="text" 
-                defaultValue={donationItem?.title}
-                onChange={(e) => setName(e.target.value)}
-              />
+          <label htmlFor="name">Nome</label>
+          <Input
+            name="name"
+            type="text"
+            defaultValue={donationItem?.title}
+            register={register}
+          />
         </InputField>
         <InputField>
-              <label htmlFor="description">Descrição</label>
-              <textarea 
-                id="description" 
-                defaultValue={donationItem?.description}
-                onChange={(e) => setDescription(e.target.value)} 
-              />
+          <label htmlFor="description">Descrição</label>
+          <textarea
+            id="description"
+            defaultValue={donationItem?.description}
+            {...register('description', { required: true })}
+          />
         </InputField>
-        <Button type='submit'>Atualizar</Button>
+        <Button type="submit">Atualizar</Button>
       </Form>
+
     </Container>
   );
-}
+};
 
 export default EditModal;
