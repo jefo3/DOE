@@ -9,7 +9,6 @@ import {
   Container, Content, ImagePreview, InputField,
 } from './styles';
 
-import NavMenu from '../../Components/NavMenu';
 import Input from '../../Components/Input';
 import Button from '../../Components/Button';
 
@@ -98,7 +97,6 @@ const NewDonationPage: React.FC = () => {
       exit={{ opacity: 0 }}
       transition= {{ delay: 0.25 }}
     >
-      <NavMenu />
       <Content>
         <h1>Nova Doação</h1>
         <form autoComplete="off" onSubmit={handleSubmit(handleRegisterDonate)}>

@@ -4,8 +4,6 @@ import * as yup from 'yup';
 
 import { Container, Content, InputField, MainContent } from './styles';
 
-import NavMenu from '../../Components/NavMenu';
-import SidebarMenu from '../../Components/SidebarMenu';
 import Input from '../../Components/Input';
 import Button from '../../Components/Button';
 
@@ -38,9 +36,7 @@ const UserInfoPage: React.FC = () => {
         exit={{ opacity: 0 }}
         transition= {{ delay: 0.15 }}
     >
-        <NavMenu />
         <Content>
-            <SidebarMenu pageActive='userInfo' />
             <MainContent>
                 <h1>Informações do usuário</h1>
                 <span>{user?.name} {user?.surname}</span>

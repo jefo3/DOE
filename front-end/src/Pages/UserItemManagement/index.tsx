@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { AiFillCheckCircle, AiFillMinusCircle } from 'react-icons/ai';
 import { BsPencilFill } from 'react-icons/bs';
 
-import NavMenu from '../../Components/NavMenu';
-import SidebarMenu from '../../Components/SidebarMenu';
 import { IDonate } from '../../Store/Interfaces/donateInterfaces';
 import { deleteDonate, getDonatesByIdUser, updateDonateStatus } from '../../Store/Services/donateServices';
 
@@ -72,9 +70,7 @@ const UserItemManagement: React.FC = () => {
             exit={{ opacity: 0 }}
             transition= {{ delay: 0.25 }}
         >
-            <NavMenu />
             <Content>
-                <SidebarMenu pageActive='userItem'/>
                 <MainContent>
                     <h1>Gerenciamento de itens</h1>
                     {

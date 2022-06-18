@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { motion } from 'framer-motion';
@@ -12,6 +12,7 @@ import { createUser } from '../../Store/Services/userServices';
 
 import Button from '../../Components/Button';
 import Input from '../../Components/Input';
+import  Alert  from '../../Components/Alert';
 
 import {
   Container, BackgroundImage, Form, DoubleFields, InputField,
@@ -30,13 +31,17 @@ const schema = yup.object().shape({
 const SignUpPage: React.FC = () => {
 
   const context = useAuth();
+
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [alertText, setAlertText] = useState<string>('');
+
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   })
   
   const handleRegister = (data: any) =>{
     const user: ICreateUser = {
-      name: data.fistName,
+      name: data.firstName,
       surname: data.lastName,
       email: data.email,
       password: data.password
@@ -45,9 +50,14 @@ const SignUpPage: React.FC = () => {
     createUser(user).then((response)=>{
       if(response){
         context.Login(data.email, data.password);
+      }else{
+        setAlertText('Erro inesperado ao acadastrar');
+        setShowAlert(true);
       }
+      console.log(response);
     }).catch((error)=>{
-      console.log('Erro ao fazer Login'+ error);
+      setAlertText('Erro no servidor: '+error);
+      setShowAlert(true);
     });
   }
 
@@ -115,6 +125,7 @@ const SignUpPage: React.FC = () => {
         </InputField>
         <Button type="submit">Cadastrar</Button>
       </form>
+      <Alert text={alertText} show={showAlert} setShow={setShowAlert}/>
     </Form>
   </Container>
 

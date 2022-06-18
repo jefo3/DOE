@@ -6,8 +6,6 @@ import { ptBR } from 'date-fns/locale';
 
 import { Container, Content, MainContent, DonationItem } from './styles';
 
-import NavMenu from '../../Components/NavMenu';
-import SidebarMenu from '../../Components/SidebarMenu';
 
 import { IDonate } from '../../Store/Interfaces/donateInterfaces';
 
@@ -40,9 +38,7 @@ const DonationHistory: React.FC = () => {
         exit={{ opacity: 0 }}
         transition= {{ delay: 0.15 }}
     >
-        <NavMenu />
         <Content>
-            <SidebarMenu pageActive='donationHistory' />
             <MainContent>
                 <h1>Doações realizadas</h1>
                 { donationItems?.length === 0 

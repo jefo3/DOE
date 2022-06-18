@@ -7,51 +7,7 @@ interface GridWrapperProps{
 const Container = styled.div`
     min-height: 100vh;
     background-color: #F4F4F4;
-    position: relative;
     overflow: hidden;
-`;
-
-const UserMenu = styled.div`
-    display: flex;
-    padding: 15px;
-    justify-content: space-between;
-`;
-
-const UserInfo = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 5px;
-
-    span{
-        font-size: 12px;
-        font-weight: 700;
-        color: #273B4A;
-    }
-`;
-
-const Logout = styled.div`  
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    transition: filter 250ms ease;
-
-    span{
-        font-size: 14px;
-        font-weight: 700;
-        color: #273B4A;
-    }
-
-    &:hover{
-        filter: brightness(1.5);
-    }
-`;
-
-const Content = styled.div`
-    padding: 0 24px;
-
-    @media (min-width: 320px) and (max-width: 767px){
-        padding: 0 12px;
-    }
 `;
 
 const NavWrapper = styled.div`
@@ -173,6 +129,6 @@ const GridWrapper = styled.div<GridWrapperProps>`
 `;
 
 export {
-  Container, UserInfo, Logout, Content, NavWrapper, UserMenu, GridWrapper,
+  Container, NavWrapper, GridWrapper,
   NavLinks, LinkItem,
 };

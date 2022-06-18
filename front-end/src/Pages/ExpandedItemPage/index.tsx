@@ -7,8 +7,6 @@ import { ptBR } from 'date-fns/locale';
 
 import { Container, Content, ImageContainer, ItemInfoContainer, MainContent } from './styles';
 
-import NavMenu from '../../Components/NavMenu';
-
 import Shirt from '../../Images/shirt.png';
 import Button from '../../Components/Button';
 
@@ -32,7 +30,6 @@ const ExpandedItemPage: React.FC= () => {
         exit={{ opacity: 0 }}
         transition= {{ delay: 0.25 }}
     >
-        <NavMenu />
         <Content>
             <MainContent>
                 <ImageContainer>
