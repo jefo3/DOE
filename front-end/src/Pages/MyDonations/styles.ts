@@ -11,17 +11,15 @@ export const Container = styled.div`
 
 export const Content = styled.div`
     display: flex;
-    align-items: center;
-    justify-content: center;
     width: 100%;
+    padding: 20px;
+    padding-top: 50px;
 `;
 
 export const MainContent = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1;
-    align-items: center;
-    justify-content: center;
 
     h1{
         color: #003957;
@@ -35,28 +33,6 @@ export const MainContent = styled.div`
         align-items: center;
         margin: 15px 0;
         color: #2E69C2;
-        font-size: 22px;
         gap: 10px;
-    }
-`;
-
-export const DonationItem = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    
-    margin: 10px 0;
-    background-color: #E3E3E3;
-    width: 75%;
-    padding: 18px 0;
-    border-radius: 5px; 
-
-    span{
-        color: #0073B1;
-        margin: 0 10px;
-        
-        &:nth-child(1){
-            width: 50%;
-        }
     }
 `;

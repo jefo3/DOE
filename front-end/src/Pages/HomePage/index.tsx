@@ -5,7 +5,7 @@ import { FaSearch } from 'react-icons/fa';
 import { BiErrorCircle } from 'react-icons/bi';
 
 import {
-  Container, NavWrapper, GridWrapper,
+  Container, NavWrapper, GridWrapper, PaginationContainer
 } from './styles';
 
 import Input from '../../Components/Input';
@@ -21,6 +21,7 @@ import { ITag } from '../../Store/Interfaces/tagsInterface';
 import GridDonationItem from '../../Components/GridDonationItem';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Form, Pagination } from 'react-bootstrap';
 
 const schema = yup.object().shape({
   search: yup.string(),
@@ -32,24 +33,23 @@ const HomePage: React.FC = () => {
     resolver: yupResolver(schema),
   })
 
-  const [donates, setDonates] = useState<Array<IDonate>>();
-  const [tags, setTags] = useState<Array<ITag>>();
+  const [donates, setDonates] = useState<Array<IDonate>>([]);
+  const [tags, setTags] = useState<Array<ITag>>([]);
   const [noItems, setNoItems] = useState(false);
 
   let navigate = useNavigate();
 
   const retrievingDonates = () => {
-    try {
-      return getAllDonates().then(response => {
-        setDonates(response);
-      })
-    } catch (error) {
+    return getAllDonates().then(response => {
+      setDonates(response);
+    }).catch((error) => {
       console.log(error);
-    }
+    })
   };
 
   const retrievingTags = async () => {
     const response = await getTags();
+    console.log(response);
     setTags(response);
   }
 
@@ -69,7 +69,6 @@ const HomePage: React.FC = () => {
       }
       setDonates(response);
     }
-
   }
 
   const handleOnClickItem = (donateItem: IDonate) => {
@@ -81,29 +80,50 @@ const HomePage: React.FC = () => {
     retrievingTags();
   }, []);
 
+  let active = 2;
+  let items = [];
+  for (let number = 1; number <= 5; number++) {
+    items.push(
+      <Pagination.Item key={number} active={number === active}>
+        {number}
+      </Pagination.Item>,
+    );
+  }
+
   return (
     <Container>
-      <NavWrapper>
-        <form autoComplete="off">
-          <Input
-            name="search"
-            type="text"
-            placeholder="Buscar objeto, bens..."
-            leftIcon={FaSearch}
-            register={register}
-          />
-        </form>
-      </NavWrapper>
-      <GridWrapper noItems={noItems}>
-        <select onChange={handleSelectOnChange}>
+      <NavWrapper autoComplete="off" onSubmit={(e) => { e.preventDefault() }}>
+        <Input
+          name="search"
+          type="text"
+          placeholder="Buscar que estão para doação..."
+          leftIcon={FaSearch}
+          register={register}
+        />
+
+        <Form.Select onChange={handleSelectOnChange} style={{ width: "40%", padding: 7, background: "#fafafa", fontSize: "16px" }} size="sm" aria-label="Default select example">
           <option value="all">Mostrar todos</option>
           {tags?.map(tag => (
             <option key={tag.id} value={tag.id}>{tag.name}</option>
           ))}
-        </select>
-        {noItems ? <p><BiErrorCircle /> Nenhum item encontrado</p>
-          : donates?.map(donate => <GridDonationItem clicked={() => handleOnClickItem(donate)} key={donate.id} donate={donate} />)}
+        </Form.Select>
+      </NavWrapper>
+      <br />
+      {(noItems || donates.length <= 0) && <div><BiErrorCircle size="20" /> Nenhum item encontrado</div>}
+
+      <GridWrapper noItems={noItems} >
+        {donates?.map(donate => <GridDonationItem clicked={() => handleOnClickItem(donate)} key={donate.id} donate={donate} />)}
       </GridWrapper>
+
+      <PaginationContainer>
+
+        <Pagination>
+          <Pagination.Prev />
+          {items}
+          <Pagination.Next />
+        </Pagination>
+      </PaginationContainer>
+
     </Container>
   )
 };

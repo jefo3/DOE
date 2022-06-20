@@ -8,9 +8,29 @@ const Container = styled.div`
     min-height: 100vh;
     background-color: #F4F4F4;
     overflow: hidden;
+    padding: 10px;
 `;
 
-const NavWrapper = styled.div`
+const PaginationContainer = styled.div`
+    position: absolute;
+    left: 60%;
+    bottom: 20px;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+
+    .page-item.active .page-link {
+        z-index: 3;
+        color: #fff;
+        background-color: #003957;
+        border-color: #003957;
+    }
+
+    .page-item .page-link {
+        color: #003957;
+    }
+`;
+
+const NavWrapper = styled.form`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -74,15 +94,9 @@ const GridWrapper = styled.div<GridWrapperProps>`
     justify-content: center;
     margin: 80px 10px 40px;
     gap: 20px;
-    position: relative;
 
     select{
-        position: absolute;
-        top: -50px;
-        right: 50px;
         color: #273B4A;
-        background-color: transparent;
-        border: none;
 
         &:focus{
             outline: none;
@@ -130,5 +144,5 @@ const GridWrapper = styled.div<GridWrapperProps>`
 
 export {
   Container, NavWrapper, GridWrapper,
-  NavLinks, LinkItem,
+  NavLinks, LinkItem, PaginationContainer
 };
