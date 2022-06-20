@@ -6,12 +6,11 @@ import { ptBR } from 'date-fns/locale';
 
 import { AiFillPlusCircle, AiFillWarning } from 'react-icons/ai';
 import {
-  Container, Content, MainContent, DonationItem
+  Container, Content, MainContent
 } from './styles';
 
 import { IDonate } from '../../Store/Interfaces/donateInterfaces';
 
-import { getAllSuccessfulDonates } from '../../Store/Services/donateServices';
 import MyDonationItem from '../../Components/MyDonationItem';
 import { Link } from 'react-router-dom';
 
