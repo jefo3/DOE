@@ -27,15 +27,18 @@ class CreateUserService {
       throw new Error('email address already used');
     }
 
+    if (password.length < 8) {
+      throw new Error('password should have at least 8 digits');
+    }
+
     const hashPassword = await hash(password, 8);
-    
+
     const user = userRepository.create({
       name,
       surname,
       email,
       password: hashPassword,
     });
-
 
     await userRepository.save(user);
 
