@@ -4,7 +4,10 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
+  OneToOne,
 } from 'typeorm';
+import { MYFile } from './MYFile';
 
 @Entity('users')
 class User {
@@ -28,6 +31,19 @@ class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @JoinColumn({ name: 'image_id' })
+  @OneToOne(
+    () => MYFile,
+    {
+      nullable: true
+    }
+  )
+  public image?: MYFile;
+ 
+  @Column({ nullable: true })
+  public image_id?: number;
+
 }
 
 export default User;
