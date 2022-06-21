@@ -5,9 +5,9 @@ const files = Router();
 
 const filesController = new FileController();
 
-files.post('/upload', filesController.create);
-files.put('/file/:id', filesController.update);
+files.post('/', filesController.create);
+files.put('/:id', filesController.update);
 files.delete('/:id', filesController.delete);
-files.get('/file/:id', filesController.listById);
+files.get('/:id', filesController.listById);
 
 export default files;

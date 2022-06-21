@@ -1,17 +1,32 @@
 import { Request, Response } from 'express';
 import CreateFileService from '../services/files/CreateFileService';
+import DeleteFileService from '../services/files/DeleteFileService';
+import ListFileService from '../services/files/ListFileService';
+import UpdateFileService from '../services/files/UpdateFileService';
 
 class FileController {
     async create(request: Request, response: Response) {
         try {
-            let fileData = request.file;
-            if (!fileData) {
-                return response.status(400).json({ error: "Envie um arquivo" });
-            }
-           
+            let fileData = request.files;
 
-            const user = await new CreateFileService().execute({ fileData });
-            return response.json(user);
+            if (!fileData) {
+                return response.status(400).json({ error: "Send alist one file" });
+            }
+
+            const files = fileData.data;
+
+            if (Array.isArray(files) || !files) {
+                return response.status(400).json({ error: "Send alist one file" });
+            }
+
+
+            const name = files.name;
+            const data = files.data;
+            const mimeType = files.mimetype;
+
+            const File = await new CreateFileService().execute({ name , data, mimeType});
+            return response.json(File);
+
         } catch (error) {
             return response.status(400).json({ error: (error as Error).message });
         }
@@ -20,15 +35,30 @@ class FileController {
     async update(request: Request, response: Response) {
         try {
             const { id } = request.params;
-            const { email, password } = request.body;
+            let fileData = request.files;
 
-            const userUpdated = await new UpdateUserService().execute({
+            if (!fileData) {
+                return response.status(400).json({ error: "Send alist one file" });
+            }
+
+            const files = fileData.data;
+
+            if (Array.isArray(files)) {
+                return response.status(400).json({ error: "Send just one file" });
+            }
+
+            const name = files.name;
+            const data = files.data;
+            const mimeType = files.mimetype;
+
+            const FileUpdated = await new UpdateFileService().execute({
                 id,
-                email,
-                password,
+                name,
+                data,
+                mimeType
             });
 
-            return response.json(userUpdated);
+            return response.json(FileUpdated);
         } catch (error) {
             return
         }
@@ -38,19 +68,28 @@ class FileController {
         try {
             const { id } = request.params;
 
-            const userDeleted = await new DeleteUserService().execute({
+            const FileDeleted = await new DeleteFileService().execute({
                 id,
             });
 
-            return response.json(userDeleted);
+            return response.json(FileDeleted);
         } catch (error) {
             return response.status(400).json({ error: (error as Error).message });
         }
     }
 
     async listById(request: Request, response: Response) {
-        const users = await new ListUserService().execute();
-        return response.json(users);
+
+        try {
+            const { id } = request.params;
+            const File = await new ListFileService().execute({
+                id,
+            });
+
+            return response.json(File);
+        } catch (error) {
+            return response.status(400).json({ error: (error as Error).message });
+        }
     }
 }
 

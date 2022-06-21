@@ -10,9 +10,9 @@ export class MYFile{
     name: string
 
     @Column({
-        type: "longblob"
+        type: "bytea"
     })
-    data: string
+    data: Buffer
 
     @Column()
     mimeType:string

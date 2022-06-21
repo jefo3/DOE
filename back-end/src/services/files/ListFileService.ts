@@ -1,29 +1,20 @@
-import { Repository } from 'typeorm';
-import File from '../../models/File';
- 
-@Injectable()
-class FilesService {
-  constructor(
-    @InjectRepository(File)
-    private filesRepository: Repository<File>,
-  ) {}
- 
-  async uploadDatabaseFile(dataBuffer: Buffer, filename: string) {
-    const newFile = await this.filesRepository.create({
-      filename,
-      data: dataBuffer
-    })
-    await this.filesRepository.save(newFile);
-    return newFile;
-  }
- 
-  async getFileById(fileId: number) {
-    const file = await this.filesRepository.findOne(fileId);
+import { getRepository } from 'typeorm';
+import { MYFile } from '../../models/MYFile';
+
+interface Request {
+  id: string;
+}
+
+class ListFileService {
+  public async execute({ id }: Request): Promise<MYFile> {
+    const FileRepository = getRepository(MYFile);
+    const file = await FileRepository.findOne(id);
+
     if (!file) {
-      throw new NotFoundException();
+      throw new Error('File dont exist');
     }
     return file;
   }
 }
- 
-export default FilesService;
+
+export default ListFileService;
