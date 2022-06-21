@@ -4,18 +4,34 @@ import User from '../../models/User';
 
 interface Request {
   id: string;
+  name?: string;
+  surname?: string;
   email?: string;
   password?: string;
 }
 
 class UpdateUserService {
-  public async execute({ id, email, password }: Request): Promise<User> {
+  public async execute({
+    id,
+    name,
+    surname,
+    email,
+    password,
+  }: Request): Promise<User> {
     const userRepository = getRepository(User);
 
     const user = await userRepository.findOne(id);
 
     if (!user) {
       throw new Error('user dont exist');
+    }
+
+    if (name) {
+      user.name = name;
+    }
+
+    if (surname) {
+      user.surname = surname;
     }
 
     if (email) {
@@ -31,8 +47,12 @@ class UpdateUserService {
     }
 
     if (password) {
-      const hashPassword = await hash(password, 8);
-      user.password = hashPassword;
+      if (password.length >= 8) {
+        const hashPassword = await hash(password, 8);
+        user.password = hashPassword;
+      } else {
+        throw new Error('Password should have at least 8 digits');
+      }
     }
 
     await userRepository.save(user);

@@ -66,7 +66,7 @@ export const apiUpdate = <T>(link: string, resquest?: T) => {
     })
     .then(response => {
       if (response.status === 200) {
-        return true;
+        return response;
       }
       return response.status;
     })

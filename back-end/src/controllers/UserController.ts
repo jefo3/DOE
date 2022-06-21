@@ -26,10 +26,12 @@ class UserController {
   async update(request: Request, response: Response) {
     try {
       const { id } = request.params;
-      const { email, password } = request.body;
+      const { name, surname, email, password } = request.body;
 
       const userUpdated = await new UpdateUserService().execute({
         id,
+        name,
+        surname,
         email,
         password,
       });
