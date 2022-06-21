@@ -41,7 +41,8 @@ test('CT001', async function () {
 
   const newUser = response.data;
   expect(response.status).toBe(200);
-  await apiDelete(`${link}/${newUser.id}`);
+
+  await apiDelete(`${link}${newUser.id}`);
 });
 
 test('CT002', async function () {
@@ -112,14 +113,20 @@ test('CT006', async function () {
 });
 
 test('CT007', async function () {
-  const user = {
+  const user1 = {
     name: 'Vitória',
     surname: 'Moreira',
     email: 'vivi@gmail.com',
     password: '12345678',
   };
 
-  await apiPost(link, { ...user });
+  const response = (await apiPost(link, { ...user1 })) as CreateUserResponse;
 
-  expect(await apiPost(link, { ...user })).toBe(400);
+  const userCreated = response.data;
+
+  const responseSameUser = await apiPost(link, { ...user1 });
+
+  expect(responseSameUser).toBe(400);
+
+  await apiDelete(`${link}${userCreated.id}`);
 });

@@ -48,8 +48,6 @@ test('CT012', async function () {
     name: 'Vivi',
   })) as UpdateUserResponse;
 
-  console.log(updateUserResponse);
-
   expect(updateUserResponse.status).toBe(200);
   expect(updateUserResponse.data.name).toBe('Vivi');
 
