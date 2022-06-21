@@ -7,7 +7,11 @@ const api = axios.create({
 export default api;
 
 export const apiDelete = (link: string) =>{
-    return api.delete(link).then((response)=>{
+    return api.delete(link, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+    }).then((response)=>{
         if (response.status === 200){
             return true;
         }
@@ -18,7 +22,11 @@ export const apiDelete = (link: string) =>{
 }
 
 export const apiGet = <T>(link: string) =>{
-    return api.get(link).then((response)=>{
+    return api.get(link, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+    }).then((response)=>{
         if(response.status === 200){
             return response.data as T;
         }
@@ -29,7 +37,11 @@ export const apiGet = <T>(link: string) =>{
 }
 
 export const apiPost = <T>(link: string, resquest?: T) =>{
-    return api.post(link, resquest).then((response)=>{
+    return api.post(link, resquest, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+    }).then((response)=>{
         if (response.status === 200){
             return true;
         }
@@ -40,7 +52,11 @@ export const apiPost = <T>(link: string, resquest?: T) =>{
 }
 
 export const apiUpdate = <T>(link: string, resquest?: T) =>{
-    return api.put(link, resquest).then((response)=>{
+    return api.put(link, resquest, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+    }).then((response)=>{
         if (response.status === 200){
             return true;
         }
@@ -51,26 +67,16 @@ export const apiUpdate = <T>(link: string, resquest?: T) =>{
 }
 
 export const apiAuth = <T>(link: string, resquest: {email: string, password: string}) =>{
-    return api.post(link, resquest).then((response)=>{
+    return api.post(link, resquest, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+    }).then((response)=>{
         if (response.status === 200){
             localStorage.setItem('@App:user', JSON.stringify(response.data.user));
             localStorage.setItem('@App:token', response.data.token);
             setTokenApi(response.data.token);
             return response.data as T;
-        }
-        throw response.status;
-    }).catch((error)=>{
-        throw error;
-    });
-}
-
-export const apiLogOut = (link: string) =>{
-    return api.post(link).then((response)=>{
-        if (response.status === 200){
-            localStorage.removeItem('@App:user');
-            localStorage.removeItem('@App:token');
-            delete api.defaults.headers.common["Authorization"];
-            return true;
         }
         throw response.status;
     }).catch((error)=>{
