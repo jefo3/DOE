@@ -1,4 +1,4 @@
-import { getRepository } from 'typeorm';
+import { FindOneOptions, getRepository, ObjectID } from 'typeorm';
 import { hash } from 'bcryptjs';
 import User from '../../models/User';
 
@@ -10,7 +10,15 @@ interface Request {
   password?: string;
 }
 
+interface IUserRepository{
+  findOne(options?: FindOneOptions<User | undefined>): Promise<User | undefined>;
+  save(user: Request): Promise<User>;
+}
+
 class UpdateUserService {
+
+  constructor(private userRepository: IUserRepository){}
+
   public async execute({
     id,
     name,
@@ -18,9 +26,11 @@ class UpdateUserService {
     email,
     password,
   }: Request): Promise<User> {
-    const userRepository = getRepository(User);
+    // const userRepository = getRepository(User);
 
-    const user = await userRepository.findOne(id);
+    const user = await this.userRepository.findOne({
+      where: { id }
+    });
 
     if (!user) {
       throw new Error('user dont exist');
@@ -35,7 +45,7 @@ class UpdateUserService {
     }
 
     if (email) {
-      const checkEmailExist = await userRepository.findOne({
+      const checkEmailExist = await this.userRepository.findOne({
         where: { email },
       });
 
@@ -55,7 +65,7 @@ class UpdateUserService {
       }
     }
 
-    await userRepository.save(user);
+    await this.userRepository.save(user);
 
     return user;
   }

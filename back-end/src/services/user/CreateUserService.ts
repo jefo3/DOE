@@ -28,30 +28,37 @@ class CreateUserService {
     password,
   }: Request): Promise<User> {
 
-    const checkUserExist = await this.userRepository.findOne({
-      where: { email },
-    });
+    try {
 
-    if (checkUserExist) {
-      throw new Error('email address already used');
+      const checkUserExist = await this.userRepository.findOne({
+        where: { email },
+      });
+
+      if (checkUserExist) {
+        throw new Error('email address already used');
+      }
+
+      if (password.length < 8) {
+        throw new Error('password should have at least 8 digits');
+      }
+
+      const hashPassword = await hash(password, 8);
+
+      const user = await this.userRepository.create({
+        name,
+        surname,
+        email,
+        password: hashPassword,
+      });
+
+      await this.userRepository.save(user);
+
+      return user;
+
+    } catch (error) {
+      if (error) throw error;
+      throw new Error('Internal server error, please try again');
     }
-
-    if (password.length < 8) {
-      throw new Error('password should have at least 8 digits');
-    }
-
-    const hashPassword = await hash(password, 8);
-
-    const user = await this.userRepository.create({
-      name,
-      surname,
-      email,
-      password: hashPassword,
-    });
-
-    await this.userRepository.save(user);
-
-    return user;
   }
 }
 

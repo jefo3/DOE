@@ -58,4 +58,31 @@ describe('User', () => {
     expect(userRepositoryInMemory.save).toHaveBeenCalledTimes(1);
   });
 
+  it('should not create a new user', async () => {
+    const userInputMock = {
+      name: 'Joao',
+      surname: 'Carlos',
+      email: 'joaocarlos@gmail.com',
+      password: 'joaoca123',
+    };
+
+    const userOutputMock = {
+      name: "Joao",
+      surname: "Carlos",
+      email: "joaocarlos@gmail.com",
+      password: "$2a$08$acay3LLE.eiYE0csYI79/eSmiI7J/.RTodbFIhf9g/K1DPMB7GX4K",
+      image_id: null,
+      id: "6aa17cb9-592b-498c-ad48-ad32d0636e2c",
+      created_at: "2022-06-22T04:29:55.018Z",
+      updated_at: "2022-06-22T04:29:55.018Z"
+    }
+
+    userRepositoryInMemory.findOne.mockReturnValueOnce(Promise.resolve(userOutputMock));
+
+    try {
+      await createUserService.execute({ ...userInputMock });
+    } catch (error) {
+      expect((error as Error).message).toBe('email address already used');
+    }
+  })
 });

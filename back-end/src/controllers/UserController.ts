@@ -32,7 +32,9 @@ class UserController {
       const { id } = request.params;
       const { name, surname, email, password } = request.body;
 
-      const userUpdated = await new UpdateUserService().execute({
+      const userRepository = getRepository(User);
+
+      const userUpdated = await new UpdateUserService(userRepository).execute({
         id,
         name,
         surname,
