@@ -58,7 +58,7 @@ describe('User', () => {
     expect(userRepositoryInMemory.save).toHaveBeenCalledTimes(1);
   });
 
-  it('should not create a new user', async () => {
+  it('should not create a new user with an email that is already in use', async () => {
     const userInputMock = {
       name: 'Joao',
       surname: 'Carlos',
@@ -84,5 +84,96 @@ describe('User', () => {
     } catch (error) {
       expect((error as Error).message).toBe('email address already used');
     }
-  })
+  });
+
+  it('should not create a new user with a password less than 8 digits', async () => {
+    const userInputMock = {
+      name: 'Joao',
+      surname: 'Carlos',
+      email: 'joaocarlos@gmail.com',
+      password: '1234567',
+    };
+
+    userRepositoryInMemory.findOne.mockReturnValueOnce(Promise.resolve(undefined));
+    userRepositoryInMemory.create.mockImplementationOnce(() => Promise.reject());
+
+    try{
+      await createUserService.execute({ ...userInputMock });
+    }catch(error){
+      return expect((error as Error).message).toBe('Internal server error, please try again');
+    }
+  });
+
+  it('should not create a new user without a name', async () => {
+    const userInputMock = {
+      name: '',
+      surname: 'Carlos',
+      email: 'joaocarlos@gmail.com',
+      password: '1234567',
+    };
+
+    userRepositoryInMemory.findOne.mockReturnValueOnce(Promise.resolve(undefined));
+    userRepositoryInMemory.create.mockImplementationOnce(() => Promise.reject());
+
+    try{
+      await createUserService.execute({ ...userInputMock });
+    }catch(error){
+      return expect((error as Error).message).toBe('Internal server error, please try again');
+    }
+  });
+
+  it('should not create a new user without a surname', async () => {
+    const userInputMock = {
+      name: 'Joao',
+      surname: '',
+      email: 'joaocarlos@gmail.com',
+      password: '1234567',
+    };
+
+    userRepositoryInMemory.findOne.mockReturnValueOnce(Promise.resolve(undefined));
+    userRepositoryInMemory.create.mockImplementationOnce(() => Promise.reject());
+
+    try{
+      await createUserService.execute({ ...userInputMock });
+    }catch(error){
+      return expect((error as Error).message).toBe('Internal server error, please try again');
+    }
+  });
+
+  it('should not create a new user without an email', async () => {
+    const userInputMock = {
+      name: '',
+      surname: 'Carlos',
+      email: '',
+      password: '1234567',
+    };
+
+    userRepositoryInMemory.findOne.mockReturnValueOnce(Promise.resolve(undefined));
+    userRepositoryInMemory.create.mockImplementationOnce(() => Promise.reject());
+
+    try{
+      await createUserService.execute({ ...userInputMock });
+    }catch(error){
+      return expect((error as Error).message).toBe('Internal server error, please try again');
+    }
+  });
+
+  it('should not create a new user with invalid email', async () => {
+    const userInputMock = {
+      name: 'Joao',
+      surname: 'Carlos',
+      email: 'joaocarlos.com',
+      password: '1234567',
+    };
+
+    userRepositoryInMemory.findOne.mockReturnValueOnce(Promise.resolve(undefined));
+    userRepositoryInMemory.create.mockImplementationOnce(() => Promise.reject());
+
+    try{
+      await createUserService.execute({ ...userInputMock });
+    }catch(error){
+      return expect((error as Error).message).toBe('Internal server error, please try again');
+    }
+  });
+
 });

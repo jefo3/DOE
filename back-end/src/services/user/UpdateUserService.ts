@@ -1,4 +1,4 @@
-import { FindOneOptions, getRepository, ObjectID } from 'typeorm';
+import { FindManyOptions, FindOneOptions, getRepository, ObjectID } from 'typeorm';
 import { hash } from 'bcryptjs';
 import User from '../../models/User';
 
@@ -13,6 +13,7 @@ interface Request {
 interface IUserRepository{
   findOne(options?: FindOneOptions<User | undefined>): Promise<User | undefined>;
   save(user: Request): Promise<User>;
+  findOneOrFail(options?: FindOneOptions<User> | undefined): Promise<User>;
 }
 
 class UpdateUserService {
@@ -26,48 +27,48 @@ class UpdateUserService {
     email,
     password,
   }: Request): Promise<User> {
-    // const userRepository = getRepository(User);
 
-    const user = await this.userRepository.findOne({
-      where: { id }
-    });
-
-    if (!user) {
-      throw new Error('user dont exist');
-    }
-
-    if (name) {
-      user.name = name;
-    }
-
-    if (surname) {
-      user.surname = surname;
-    }
-
-    if (email) {
-      const checkEmailExist = await this.userRepository.findOne({
-        where: { email },
+    try {
+      const user = await this.userRepository.findOneOrFail({
+        where: { id }
       });
 
-      if (checkEmailExist) {
-        throw new Error('email address already used');
+      if (!user) {
+        throw new Error('user dont exist');
       }
 
-      user.email = email;
-    }
+      if (name) {
+        user.name = name;
+      }
 
-    if (password) {
-      if (password.length >= 8) {
+      if (surname) {
+        user.surname = surname;
+      }
+
+      if (email) {
+        const checkEmailExist = await this.userRepository.findOne({
+          where: { email },
+        });
+
+        if (checkEmailExist) {
+          throw new Error('email address already used');
+        }
+
+        user.email = email;
+      }
+
+      if (password) {
         const hashPassword = await hash(password, 8);
         user.password = hashPassword;
-      } else {
-        throw new Error('Password should have at least 8 digits');
       }
+
+      await this.userRepository.save(user);
+
+      return user;
+    } catch (error) {
+      if (error) throw error;
+      throw new Error('Server internal error, please try again!');
     }
-
-    await this.userRepository.save(user);
-
-    return user;
   }
 }
 
