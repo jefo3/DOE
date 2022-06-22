@@ -1,5 +1,6 @@
-import { getRepository } from 'typeorm';
+import { FindOneOptions, getRepository, Repository } from 'typeorm';
 import { hash } from 'bcryptjs';
+import { injectable, inject } from 'tsyringe';
 
 import User from '../../models/User';
 
@@ -10,7 +11,16 @@ interface Request {
   password: string;
 }
 
+interface IUsersRepository{
+  create(user: User): Promise<User>;
+  findOne(options?: FindOneOptions<User | undefined>): Promise<User | undefined>;
+  save(user: User): Promise<User>;
+}
+
 class CreateUserService {
+
+  constructor(private userRepository: IUsersRepository){}
+
   public async execute({
     name,
     surname,
@@ -19,7 +29,7 @@ class CreateUserService {
   }: Request): Promise<User> {
     const userRepository = getRepository(User);
 
-    const checkUserExist = await userRepository.findOne({
+    const checkUserExist = await this.userRepository.findOne({
       where: { email },
     });
 
