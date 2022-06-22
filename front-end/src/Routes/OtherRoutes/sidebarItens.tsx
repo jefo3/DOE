@@ -14,7 +14,14 @@ const SidebarItems = [
   },
 
   {
-    name: 'Doações Recebidas',
+    name: 'Minhas doações',
+    route: '/mydonation',
+    element: <UserItemManagement />,
+    icon: <AiFillPlusCircle size="18px" />
+  },
+
+  {
+    name: 'Doações realizadas',
     route: '/mydonation',
     element: <UserItemManagement />,
     icon: <AiFillPlusCircle size="18px" />

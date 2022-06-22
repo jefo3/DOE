@@ -7,30 +7,54 @@ interface GridWrapperProps{
 const Container = styled.div`
     min-height: 100vh;
     background-color: #F4F4F4;
+    position: relative;
     overflow: hidden;
-    padding: 10px;
 `;
 
-const PaginationContainer = styled.div`
-    position: absolute;
-    left: 60%;
-    bottom: 20px;
-    transform: translate(-50%, -50%);
-    margin: 0 auto;
+const UserMenu = styled.div`
+    display: flex;
+    padding: 15px;
+    justify-content: space-between;
+`;
 
-    .page-item.active .page-link {
-        z-index: 3;
-        color: #fff;
-        background-color: #003957;
-        border-color: #003957;
-    }
+const UserInfo = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 5px;
 
-    .page-item .page-link {
-        color: #003957;
+    span{
+        font-size: 12px;
+        font-weight: 700;
+        color: #273B4A;
     }
 `;
 
-const NavWrapper = styled.form`
+const Logout = styled.div`  
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: filter 250ms ease;
+
+    span{
+        font-size: 14px;
+        font-weight: 700;
+        color: #273B4A;
+    }
+
+    &:hover{
+        filter: brightness(1.5);
+    }
+`;
+
+const Content = styled.div`
+    padding: 0 24px;
+
+    @media (min-width: 320px) and (max-width: 767px){
+        padding: 0 12px;
+    }
+`;
+
+const NavWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -94,9 +118,15 @@ const GridWrapper = styled.div<GridWrapperProps>`
     justify-content: center;
     margin: 80px 10px 40px;
     gap: 20px;
+    position: relative;
 
     select{
+        position: absolute;
+        top: -50px;
+        right: 50px;
         color: #273B4A;
+        background-color: transparent;
+        border: none;
 
         &:focus{
             outline: none;
@@ -143,6 +173,6 @@ const GridWrapper = styled.div<GridWrapperProps>`
 `;
 
 export {
-  Container, NavWrapper, GridWrapper,
-  NavLinks, LinkItem, PaginationContainer
+  Container, UserInfo, Logout, Content, NavWrapper, UserMenu, GridWrapper,
+  NavLinks, LinkItem,
 };

@@ -8,6 +8,8 @@ import {
   Container, Content, InputField, MainContent
 } from './styles';
 
+import NavMenu from '../../Components/NavMenu';
+import SidebarMenu from '../../Components/SidebarMenu';
 import Input from '../../Components/Input';
 import Button from '../../Components/Button';
 
@@ -22,7 +24,7 @@ const schema = yup.object().shape({
 const UserInfoPage: React.FC = () => {
   const { user } = useAuth();
 
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   });
 
@@ -38,7 +40,9 @@ const UserInfoPage: React.FC = () => {
       exit={{ opacity: 0 }}
       transition={{ delay: 0.15 }}
     >
+      <NavMenu />
       <Content>
+        <SidebarMenu pageActive="userInfo" />
         <MainContent>
           <h1>Informações do usuário</h1>
           <span>
@@ -55,6 +59,7 @@ const UserInfoPage: React.FC = () => {
                 defaultValue={user?.name}
                 register={register}
               />
+              <small>{errors?.name}</small>
             </InputField>
             <InputField>
               <label htmlFor="surname">Sobrenome</label>
@@ -64,6 +69,7 @@ const UserInfoPage: React.FC = () => {
                 defaultValue={user?.surname}
                 register={register}
               />
+              <small>{errors?.name}</small>
             </InputField>
             <InputField>
               <label htmlFor="email">Email</label>
@@ -73,6 +79,7 @@ const UserInfoPage: React.FC = () => {
                 defaultValue={user?.email}
                 register={register}
               />
+              <small>{errors?.name}</small>
             </InputField>
             <Button type="submit">Salvar alterações</Button>
           </form>

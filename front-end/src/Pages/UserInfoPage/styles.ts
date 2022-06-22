@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
     display: flex;
@@ -11,22 +11,21 @@ export const Container = styled.div`
 
 export const Content = styled.div`
     display: flex;
-    justify-content: center;
+    flex: 1;
     width: 100%;
+    padding-left: 360px;
 `;
 
 export const MainContent = styled.div`
     display: flex;
     flex-direction: column;
-    width: 100%;
-    margin: 15px;
+    flex: 1;
 
     h1{
         color: #003957;
         font-size: 36px;
         font-weight: 500;
         margin: 5px 0 15px;
-        text-align: center;
     }
 
     span{
@@ -39,10 +38,7 @@ export const MainContent = styled.div`
     form{
         display: flex;
         flex-direction: column;
-    }
-
-    button{
-        width: 200px;
+        width: 60%;
     }
 `;
 

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
     min-height: 100vh;
@@ -55,13 +55,26 @@ export const ItemInfoContainer = styled.div`
         margin-bottom: 80px;
     }
 
+    a{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 230px;
+        height: 45px;
+        border-radius: 10px;
+        background-color : #004C75;
+        color: #fff;
+        text-decoration: none;
+        transition: filter 0.250s;
+
+        &:hover{
+            filter: brightness(1.2);
+        }
+    }
+
     div{
         align-self: flex-start;
         margin: 0;
-        
-        button{
-            width: 230px;
-            border-radius: 10px;
-        }
+
     }
 `;

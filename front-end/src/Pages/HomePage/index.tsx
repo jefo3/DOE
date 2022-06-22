@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
-import { FaSearch } from 'react-icons/fa';
+import { FaUserCircle, FaUserAlt, FaSearch } from 'react-icons/fa';
+import { RiLogoutBoxFill } from 'react-icons/ri';
+import { IoMdHome } from 'react-icons/io';
+import { AiFillPlusCircle } from 'react-icons/ai';
 import { BiErrorCircle } from 'react-icons/bi';
 
 import {
-  Container, NavWrapper, GridWrapper, PaginationContainer
+  Container, UserInfo, Logout, Content, NavWrapper,
+  UserMenu, GridWrapper, NavLinks, LinkItem,
 } from './styles';
 
 import Input from '../../Components/Input';
@@ -14,6 +18,8 @@ import { useAuth } from '../../Store/Context/authContext';
 import { getAllDonates, getDonatesByTags } from '../../Store/Services/donateServices';
 import { getTags } from '../../Store/Services/tagsServices';
 
+
+import { motion } from 'framer-motion';
 import * as yup from 'yup';
 
 import { IDonate } from '../../Store/Interfaces/donateInterfaces';
@@ -21,7 +27,6 @@ import { ITag } from '../../Store/Interfaces/tagsInterface';
 import GridDonationItem from '../../Components/GridDonationItem';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form, Pagination } from 'react-bootstrap';
 
 const schema = yup.object().shape({
   search: yup.string(),
@@ -33,42 +38,45 @@ const HomePage: React.FC = () => {
     resolver: yupResolver(schema),
   })
 
-  const [donates, setDonates] = useState<Array<IDonate>>([]);
-  const [tags, setTags] = useState<Array<ITag>>([]);
+  const [donates, setDonates] = useState<Array<IDonate>>();
+  const [tags, setTags] = useState<Array<ITag>>();
   const [noItems, setNoItems] = useState(false);
-
+  
   let navigate = useNavigate();
-
+  
   const retrievingDonates = () => {
-    return getAllDonates().then(response => {
-      setDonates(response);
-    }).catch((error) => {
+    try {
+      return getAllDonates().then(response => {
+        setDonates(response);
+      })
+    } catch (error) {
       console.log(error);
-    })
+    }
   };
 
   const retrievingTags = async () => {
     const response = await getTags();
-    console.log(response);
     setTags(response);
   }
 
   const handleSelectOnChange = async (e: any) => {
     e.preventDefault();
 
-    if (e.target.value === 'all') {
+    if (e.target.value === 'all'){
       retrievingDonates();
-    } else {
+    }else{
       const tagId = e.target.value;
       const response = await getDonatesByTags(tagId);
 
-      if (response.length === 0) {
+      if (response.length === 0){
         setNoItems(true);
-      } else {
+      }else{
         setNoItems(false);
       }
+
       setDonates(response);
     }
+
   }
 
   const handleOnClickItem = (donateItem: IDonate) => {
@@ -80,33 +88,68 @@ const HomePage: React.FC = () => {
     retrievingTags();
   }, []);
 
-  return (
-    <Container>
-      <NavWrapper autoComplete="off" onSubmit={(e) => { e.preventDefault() }}>
-        <Input
-          name="search"
-          type="text"
-          placeholder="Buscar que estão para doação..."
-          leftIcon={FaSearch}
-          register={register}
-        />
-
-        <Form.Select onChange={handleSelectOnChange} style={{ width: "40%", padding: 7, background: "#fafafa", fontSize: "16px" }} size="sm" aria-label="Default select example">
-          <option value="all">Mostrar todos</option>
-          {tags?.map(tag => (
-            <option key={tag.id} value={tag.id}>{tag.name}</option>
-          ))}
-        </Form.Select>
+  return(
+  <Container
+    as={motion.div} 
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition= {{ delay: 0.25 }}
+  >
+    <UserMenu>
+      <UserInfo>
+        <FaUserCircle color="#273B4A" size="22px" />
+        <span>Olá, {context.user?.name}. Seja bem-vindo(a)!</span>
+      </UserInfo>
+      <Logout onClick={() => context.LogOut()}>
+        <RiLogoutBoxFill size="30px" color="#273B4A" />
+        <span>Log out</span>
+      </Logout>
+    </UserMenu>
+    <Content>
+      <NavWrapper>
+        <NavLinks>
+          <NavLink to="/">
+            <LinkItem>
+              <IoMdHome size="32px" />
+                Home
+            </LinkItem>
+          </NavLink>
+          <NavLink to="/usermanagement">
+            <LinkItem>
+              <FaUserAlt size="28px" />
+              Info de Usuário
+            </LinkItem>
+          </NavLink>
+          <NavLink to="/newdonation">
+          <LinkItem>
+            <AiFillPlusCircle size="28px" />
+            Nova Doação
+          </LinkItem>
+          </NavLink>
+        </NavLinks>
+        <form autoComplete="off">
+          <Input
+            name="search"
+            type="text"
+            placeholder="Buscar objeto, bens..."
+            leftIcon={FaSearch}
+            register={register}
+          />
+        </form>
       </NavWrapper>
-      <br />
-      {(noItems || donates.length <= 0) && <div><BiErrorCircle size="20" /> Nenhum item encontrado</div>}
-
-      <GridWrapper noItems={noItems} >
-        {donates?.map(donate => <GridDonationItem clicked={() => handleOnClickItem(donate)} key={donate.id} donate={donate} />)}
+      <GridWrapper noItems={noItems}>
+        <select onChange={handleSelectOnChange}>
+          <option value="all">Mostrar todos</option>
+          { tags?.map(tag => (
+            <option key={tag.id} value={tag.id}>{tag.name}</option>
+          )) }
+        </select>
+        { noItems ? <p><BiErrorCircle /> Nenhum item encontrado</p>
+          : donates?.map(donate => <GridDonationItem clicked={() => handleOnClickItem(donate)} key={donate.id} donate={donate} /> )}
       </GridWrapper>
-
-    </Container>
-  )
-};
+    </Content>
+  </Container>
+)};
 
 export default HomePage;

@@ -58,6 +58,4 @@ describe('User', () => {
     expect(userRepositoryInMemory.save).toHaveBeenCalledTimes(1);
   });
 
-  // it('should not be able to create a new user ')
-
-})
+});

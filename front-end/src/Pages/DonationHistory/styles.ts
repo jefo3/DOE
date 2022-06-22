@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
     display: flex;
@@ -17,49 +17,43 @@ export const Content = styled.div`
 `;
 
 export const MainContent = styled.div`
+    display: flex;
+    flex-direction: column;
     flex: 1;
-    align-self: flex-start;
-    padding: 20px;
 
     h1{
         color: #003957;
         font-size: 36px;
-        font-weight: 600;
+        font-weight: 500;
+        margin: 10px 0 15px;
     }
 
+    p{
+        display: flex;
+        margin: 15px 0;
+        color: #2E69C2;
+        font-size: 22px;
+        gap: 10px;
+    }
 `;
 
 export const DonationItem = styled.div`
     display: flex;
     align-items: center;
-
-    margin: 20px 0;
+    justify-content: space-around;
+    
+    margin: 10px 0;
     background-color: #E3E3E3;
     width: 75%;
     padding: 18px 0;
-    border-radius: 5px;
+    border-radius: 5px; 
 
     span{
         color: #0073B1;
         margin: 0 10px;
+        
+        &:nth-child(1){
+            width: 50%;
+        }
     }
-
-    span:nth-child(1){
-        width: 45%;
-    }
-`;
-
-export const IconsMenu = styled.div`
-    display: flex;
-    margin-left: auto;
-    margin-right: 10px;
-
-    svg{
-        margin: 0 5px;
-        cursor: pointer;
-    }
-
-    svg:nth-child(3){
-        margin-left: 20px;
-    }
-`;
+`;   
