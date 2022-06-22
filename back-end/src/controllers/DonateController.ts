@@ -8,14 +8,19 @@ import ListAllDonateService from '../services/donate/ListAllDonateService';
 import FilterDonateService from '../services/donate/FilterDonateService';
 import ListAllSuccessfullDonateService from '../services/donate/ListAllSuccessfulDonateService';
 
+import {getRepository} from 'typeorm'
+import Donate from '../models/Donate'
 class DonateController {
   async create(request: Request, response: Response) {
     try {
+
       const { title, description, tag_id } = request.body;
       const { id: user_id } = request.user;
       const status_donate = 'pending';
 
-      const donate = await new CreateDonateService().execute({
+      const donateRepository = getRepository(Donate);
+
+      const donate = await new CreateDonateService(donateRepository).execute({
         title,
         description,
         user_id,
