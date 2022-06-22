@@ -1,5 +1,3 @@
-import { getRepository } from 'typeorm';
-
 import Donate from '../../models/Donate';
 
 interface Request {
@@ -10,7 +8,15 @@ interface Request {
   status_donate: string;
 }
 
+interface IDonateRepository{
+  create(donate: Request): Promise<Donate>;
+  save(donate: Request): Promise<Donate>;
+}
+
 class CreateDonateService {
+
+  constructor(private donateRepository: IDonateRepository){}
+
   public async execute({
     title,
     description,
@@ -18,9 +24,8 @@ class CreateDonateService {
     tag_id,
     status_donate,
   }: Request): Promise<Donate> {
-    const donateRepository = getRepository(Donate);
 
-    const donate = donateRepository.create({
+    const donate = await this.donateRepository.create({
       title,
       description,
       user_id,
@@ -28,7 +33,7 @@ class CreateDonateService {
       status_donate,
     });
 
-    await donateRepository.save(donate);
+    await this.donateRepository.save(donate);
 
     return donate;
   }
