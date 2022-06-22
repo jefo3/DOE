@@ -4,13 +4,17 @@ import CreateUserService from '../services/user/CreateUserService';
 import UpdateUserService from '../services/user/UpdateUserService';
 import DeleteUserService from '../services/user/DeleteUserService';
 import ListUserService from '../services/user/ListUserService';
+import { getRepository } from 'typeorm';
+import User from '../models/User';
 
 class UserController {
   async create(request: Request, response: Response) {
     try {
       const { name, surname, email, password } = request.body;
 
-      const user = await new CreateUserService().execute({
+      const userRepository = getRepository(User);
+
+      const user = await new CreateUserService(userRepository).execute({
         name,
         surname,
         email,
@@ -57,7 +61,8 @@ class UserController {
   }
 
   async list(request: Request, response: Response) {
-    const users = await new ListUserService().execute();
+    const userRepository = getRepository(User);
+    const users = await new ListUserService(userRepository).execute();
     return response.json(users);
   }
 }

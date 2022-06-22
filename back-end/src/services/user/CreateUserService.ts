@@ -12,9 +12,9 @@ interface Request {
 }
 
 interface IUsersRepository{
-  create(user: User): Promise<User>;
+  create(user: Request): Promise<User>;
   findOne(options?: FindOneOptions<User | undefined>): Promise<User | undefined>;
-  save(user: User): Promise<User>;
+  save(user: Request): Promise<User>;
 }
 
 class CreateUserService {
@@ -27,7 +27,6 @@ class CreateUserService {
     email,
     password,
   }: Request): Promise<User> {
-    const userRepository = getRepository(User);
 
     const checkUserExist = await this.userRepository.findOne({
       where: { email },
@@ -43,14 +42,14 @@ class CreateUserService {
 
     const hashPassword = await hash(password, 8);
 
-    const user = userRepository.create({
+    const user = await this.userRepository.create({
       name,
       surname,
       email,
       password: hashPassword,
     });
 
-    await userRepository.save(user);
+    await this.userRepository.save(user);
 
     return user;
   }
