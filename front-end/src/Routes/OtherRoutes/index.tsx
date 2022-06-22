@@ -9,6 +9,7 @@ import { useAuth } from '../../Store/Context/authContext';
 import SidebarItems from './sidebarItens';
 import Logo from '../../Images/logo.png';
 import ExpandedItemPage from '../../Pages/ExpandedItemPage';
+import NewDonationPage from '../../Pages/NewDonationPage';
 
 const OtherRoutes: React.FC = () => {
   const { LogOut } = useAuth();
@@ -59,6 +60,8 @@ const OtherRoutes: React.FC = () => {
                 <Route key={item.name} path={item.route} element={item.element} />
               ))}
               <Route key="Expanded Item" path="/expandeditem" element={<ExpandedItemPage />} />
+              <Route key="New Item" path="/newdonation" element={<NewDonationPage />} />
+
             </Routes>
           </div>
 

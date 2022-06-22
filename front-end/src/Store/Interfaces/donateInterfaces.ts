@@ -13,5 +13,5 @@ export interface IDonate extends ICreatDonate{
     };
     created_at: string;
     updated_at: string;
-    status_donate: "em_andamento" | "finalizada";
+    status_donate: string;
 }

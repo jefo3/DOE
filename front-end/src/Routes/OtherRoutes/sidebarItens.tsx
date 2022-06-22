@@ -2,8 +2,6 @@ import { AiFillGift, AiFillHome, AiFillPlusCircle } from 'react-icons/ai';
 import { FaUserAlt } from 'react-icons/fa';
 import { RiLogoutBoxFill } from 'react-icons/ri';
 import HomePage from '../../Pages/HomePage';
-import MyDonations from '../../Pages/MyDonations';
-import NewDonationPage from '../../Pages/NewDonationPage';
 import UserInfoPage from '../../Pages/UserInfoPage';
 import UserItemManagement from '../../Pages/UserItemManagement';
 
@@ -16,16 +14,9 @@ const SidebarItems = [
   },
 
   {
-    name: 'Minhas Doações',
-    route: '/mydonations',
-    element: <MyDonations />,
-    icon: <AiFillGift size="18px" />
-  },
-
-  {
     name: 'Doações Recebidas',
-    route: '/newdonation',
-    element: <NewDonationPage />,
+    route: '/mydonation',
+    element: <UserItemManagement />,
     icon: <AiFillPlusCircle size="18px" />
   },
 

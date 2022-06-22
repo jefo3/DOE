@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import { AiFillCheckCircle, AiFillMinusCircle } from 'react-icons/ai';
+import { AiFillCheckCircle, AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai';
 import { BsPencilFill } from 'react-icons/bs';
 import { RiTimeFill } from 'react-icons/ri';
 
 import { motion } from 'framer-motion';
 import ptBr from 'date-fns/locale/pt-BR';
 import { format, parseISO } from 'date-fns';
-
 import { IDonate } from '../../Store/Interfaces/donateInterfaces';
 import { deleteDonate, getDonatesByIdUser, updateDonateStatus } from '../../Store/Services/donateServices';
 
@@ -16,6 +15,7 @@ import {
 } from './styles';
 
 import EditModal from '../../Components/EditModal';
+import { Link } from 'react-router-dom';
 
 const UserItemManagement: React.FC = () => {
   const [userDonations, setUserDonations] = useState<Array<IDonate>>([]);
@@ -73,6 +73,10 @@ const UserItemManagement: React.FC = () => {
     >
       <Content>
         <MainContent>
+        <Link to='/newdonation'>
+            <h4 style={{ textAlign: "right" }}>Adicionar uma doação <AiFillPlusCircle size="28px" /></h4>
+        </Link>
+          
           <h1>Gerenciamento de itens</h1>
           {userDonations?.map((userDonation) => (
             <DonationItem key={userDonation.id}>
