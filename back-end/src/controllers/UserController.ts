@@ -52,7 +52,9 @@ class UserController {
     try {
       const { id } = request.params;
 
-      const userDeleted = await new DeleteUserService().execute({
+      const userRepository = getRepository(User);
+
+      const userDeleted = await new DeleteUserService(userRepository).execute({
         id,
       });
 

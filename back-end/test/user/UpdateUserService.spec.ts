@@ -270,4 +270,32 @@ describe('Update user', () => {
     }
   });
 
+  it('should not be able to update an user when occurr an internal server error', async () => {
+    const userInputMock = {
+      id: '6aa17cb9-592b-498c-ad48-ad32d0636e2c',
+      suruname: '',
+    };
+
+    const userOutputMock = {
+      name: "Joao",
+      surname: "Ferreira",
+      email: "joao@gmail.com",
+      password: '$2a$08$acay3LLE.eiYE0csYI79/eSmiI7J/.RTodbFIhf9g/K1DPMB7GX4K',
+      id: "6aa17cb9-592b-498c-ad48-ad32d0636e2c",
+      created_at: "2022-06-22T04:29:55.018Z",
+      updated_at: "2022-06-22T04:29:55.018Z"
+    }
+
+    userRepositoryInMemory.findOneOrFail.mockReturnValue(userOutputMock);
+    userRepositoryInMemory.findOne.mockReturnValue(undefined);
+    userRepositoryInMemory.save.mockImplementation(() => Promise.reject());
+
+    try {
+      await updateUserService.execute({ ...userInputMock });
+    } catch (error) {
+      expect((error as Error).message).toBe('Server internal error, please try again!');
+    }
+
+  });
+
 });

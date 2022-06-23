@@ -1,12 +1,12 @@
 import CreateUserService from "../../src/services/user/CreateUserService"
 import { userRepositoryInMemory } from "./mocks/CreateUserServiceMock";
 
-describe('User', () => {
+describe('Create User', () => {
   let createUserService: CreateUserService;
 
   beforeEach(() => {
-    createUserService = new CreateUserService(userRepositoryInMemory);
     userRepositoryInMemory;
+    createUserService = new CreateUserService(userRepositoryInMemory);
   });
 
   afterAll(() => {
