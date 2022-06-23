@@ -1,6 +1,5 @@
-import { compare } from 'bcryptjs';
-import { getRepository } from 'typeorm';
-import { sign } from 'jsonwebtoken';
+import { FindOneOptions } from 'typeorm';
+import { Secret, sign, SignOptions } from 'jsonwebtoken';
 
 import authConfig from '../config/auth';
 
@@ -16,17 +15,30 @@ interface Response {
   token: string;
 }
 
-class AutenticateUserService {
-  public async execute({ email, password }: Request): Promise<Response> {
-    const usersRepository = getRepository(User);
+interface IUserRepository{
+  findOne(options?: FindOneOptions<User | undefined>): Promise<User | undefined>;
+}
 
-    const user = await usersRepository.findOne({ where: { email } });
+class AutenticateUserService {
+
+  constructor(
+    private userRepository: IUserRepository,
+    private compare: (s: string, hash: string) => Promise<boolean>,
+    private sign: (
+      payload: string | object | Buffer,
+      secretOrPrivateKey: Secret,
+      options?: SignOptions | undefined
+    ) => string
+  ){}
+
+  public async execute({ email, password }: Request): Promise<Response> {
+    const user = await this.userRepository.findOne({ where: { email } });
 
     if (!user) {
       throw new Error('Incorrect email/password combination');
     }
 
-    const passwordMatched = await compare(password, user.password);
+    const passwordMatched = await this.compare(password, user.password);
 
     if (!passwordMatched) {
       throw new Error('Incorrect email/password combination');
@@ -34,7 +46,7 @@ class AutenticateUserService {
 
     const { secret, expiresIn } = authConfig.jwt;
 
-    const token = sign({}, secret, {
+    const token = this.sign({}, secret, {
       subject: user.id,
       expiresIn,
     });

@@ -18,7 +18,7 @@ describe('Delete User', () => {
     expect(deleteUserService).toBeDefined();
   });
 
-  it('should delete an user', async () => {
+  it('should delete a user', async () => {
     const userId = '6aa17cb9-592b-498c-ad48-ad32d0636e2c';
 
     const userOutputMock = {
@@ -49,7 +49,7 @@ describe('Delete User', () => {
 
   });
 
-  it('should not delete an user with invalid id', async () => {
+  it('should not delete a user with invalid id', async () => {
     const userId = '-1';
 
     userRepositoryInMemory.findOne.mockReturnValue(undefined);
@@ -62,7 +62,7 @@ describe('Delete User', () => {
 
   });
 
-  it('should not be able to delete an user when occurr an internal server error', async () => {
+  it('should not be able to delete a user when occur an internal server error', async () => {
     const userId = '6aa17cb9-592b-498c-ad48-ad32d0636e2c';
     const userOutputMock = {
       name: "Joao",

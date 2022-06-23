@@ -1,4 +1,8 @@
+import { compare } from 'bcryptjs';
 import { Request, Response } from 'express';
+import { sign } from 'jsonwebtoken';
+import { getRepository } from 'typeorm';
+import User from '../models/User';
 import AutenticateUserService from '../services/AutenticateUserService';
 
 class SessionController {
@@ -6,7 +10,9 @@ class SessionController {
     try {
       const { email, password } = request.body;
 
-      const { user, token } = await new AutenticateUserService().execute({
+      const userRepository = getRepository(User);
+
+      const { user, token } = await new AutenticateUserService(userRepository, compare, sign).execute({
         email,
         password,
       });

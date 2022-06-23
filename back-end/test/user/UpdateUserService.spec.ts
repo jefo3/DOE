@@ -18,7 +18,7 @@ describe('Update user', () => {
     expect(updateUserService).toBeDefined();
   });
 
-  it('should update name of an user', async () => {
+  it('should update name of a user', async () => {
     const userInputMock = {
       id: '6aa17cb9-592b-498c-ad48-ad32d0636e2c',
       name: 'Joao',
@@ -50,7 +50,7 @@ describe('Update user', () => {
     expect(userRepositoryInMemory.save).toHaveBeenCalledTimes(1);
   });
 
-  it('should update surname of an user', async () => {
+  it('should update surname of a user', async () => {
     const userInputMock = {
       id: '6aa17cb9-592b-498c-ad48-ad32d0636e2c',
       surname: 'Ferreira',
@@ -81,7 +81,7 @@ describe('Update user', () => {
     expect(userRepositoryInMemory.save).toHaveBeenCalled();
   });
 
-  it('should update email of an user', async () => {
+  it('should update email of a user', async () => {
     const userInputMock = {
       id: '6aa17cb9-592b-498c-ad48-ad32d0636e2c',
       email: 'joao@gmail.com',
@@ -113,7 +113,7 @@ describe('Update user', () => {
     expect(userRepositoryInMemory.save).toHaveBeenCalled();
   });
 
-  it('should update password of an user', async () => {
+  it('should update password of a user', async () => {
     const userInputMock = {
       id: '6aa17cb9-592b-498c-ad48-ad32d0636e2c',
       password: '12345678',
@@ -148,7 +148,7 @@ describe('Update user', () => {
     expect(userRepositoryInMemory.save).toHaveBeenCalled();
   });
 
-  it('should not be able to update an user with invalid id', async () => {
+  it('should not be able to update a user with invalid id', async () => {
     const userInputMock = {
       id: '-1',
       name: 'Joao',
@@ -163,7 +163,7 @@ describe('Update user', () => {
     }
   });
 
-  it('should not be able to update an user with a pre-existent email', async () => {
+  it('should not be able to update a user with a pre-existent email', async () => {
     const userInputMock = {
       id: '6aa17cb9-592b-498c-ad48-ad32d0636e2c',
       email: 'joao@gmail.com',
@@ -191,7 +191,7 @@ describe('Update user', () => {
 
   })
 
-  it('should not be able to update an user with invalid email', async () => {
+  it('should not be able to update a user with invalid email', async () => {
     const userInputMock = {
       id: '6aa17cb9-592b-498c-ad48-ad32d0636e2c',
       email: 'joao.com',
@@ -218,7 +218,7 @@ describe('Update user', () => {
     }
   });
 
-  it('should not be able to update an user with a blank name', async () => {
+  it('should not be able to update a user with a blank name', async () => {
     const userInputMock = {
       id: '6aa17cb9-592b-498c-ad48-ad32d0636e2c',
       name: '',
@@ -244,7 +244,7 @@ describe('Update user', () => {
     }
   });
 
-  it('should not be able to update an user with a blank surname', async () => {
+  it('should not be able to update a user with a blank surname', async () => {
     const userInputMock = {
       id: '6aa17cb9-592b-498c-ad48-ad32d0636e2c',
       suruname: '',
@@ -270,7 +270,7 @@ describe('Update user', () => {
     }
   });
 
-  it('should not be able to update an user when occurr an internal server error', async () => {
+  it('should not be able to update a user when occurr an internal server error', async () => {
     const userInputMock = {
       id: '6aa17cb9-592b-498c-ad48-ad32d0636e2c',
       suruname: '',
