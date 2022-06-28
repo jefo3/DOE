@@ -50,10 +50,14 @@ describe('Donate', () => {
     });
 
     expect(response).toEqual(donateOutputMock);
-    // expect(response).toHaveProperty('id');
-    // expect(response).toHaveProperty('email');
-    // expect(response.id).toBe('6aa17cb9-592b-498c-ad48-ad32d0636e2c');
-    // expect(response.name).toStrictEqual(donateInputMock.name);
+    expect(response).toHaveProperty('user_id');
+    expect(response).toHaveProperty('tag_id');
+    expect(response).toHaveProperty('status_donate')
+    expect(response).toHaveProperty('id')
+    expect(response.id).toBe('8e9c96dd-2299-4aca-b4c5-2938d240cc5d');
+    expect(response.user_id).toStrictEqual(donateInputMock.user_id);
+    expect(response.tag_id).toStrictEqual(donateInputMock.tag_id);
+    expect(response.status_donate).toStrictEqual(donateInputMock.status_donate);
     expect(donateRepositoryInMemory.create).toHaveBeenCalled();
     expect(donateRepositoryInMemory.save).toHaveBeenCalled();
     expect(donateRepositoryInMemory.create).toHaveBeenCalledTimes(1);
