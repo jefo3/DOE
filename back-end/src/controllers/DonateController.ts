@@ -11,6 +11,7 @@ import ListAllSuccessfullDonateService from '../services/donate/ListAllSuccessfu
 import {getRepository} from 'typeorm'
 import Donate from '../models/Donate'
 import FilterDonateByTitleService from '../services/donate/FilterDonateByTitleService';
+import UpdateImageService from '../services/donate/UpdateImageService';
 
 class DonateController {
   async create(request: Request, response: Response) {
@@ -119,6 +120,26 @@ class DonateController {
       return response.json(donates);
     } catch (error) {
       return response.status(400).json({ error: (error as Error).message });
+    }
+  }
+
+  async addImage(request: Request, response: Response){
+    try{
+      const { id } = request.params;
+      console.log(id)
+      const image = request.file?.filename as string
+      console.log(image)
+      const donateRepository = getRepository(Donate);
+
+      const donate = new UpdateImageService(donateRepository).execute({
+        id,
+        image
+      })
+
+      return response.json(donate);
+
+    }catch(error){
+      return response.status(400).json({error: (error as Error).message})
     }
   }
 }

@@ -1,10 +1,13 @@
 import { Router } from 'express';
 import DonateController from '../controllers/DonateController';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import multer from 'multer';
+import uploadConfig from '../config/upload';
 
 const donates = Router();
 
 const donateController = new DonateController();
+const upload = multer(uploadConfig);
 
 donates.use(ensureAuthenticated);
 
@@ -18,4 +21,5 @@ donates.get('/feed/success', donateController.listAllSuccessfull);
 donates.get('/feed/:tag_id', donateController.filterTag);
 donates.get('/donate/:title', donateController.filterByTitle);
 
+donates.patch('/image/:id', upload.single('teste'), donateController.addImage)
 export default donates;

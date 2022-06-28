@@ -32,6 +32,9 @@ class Donate {
   @Column()
   status_donate: string;
 
+  @Column()
+  image: string;
+
   @JoinColumn({ name: 'user_id' })
   @OneToOne(() => User, user => user.id)
   user: User;
