@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 interface MenuNavWrapperProps{
     pageActive: string;
@@ -29,23 +29,23 @@ export const MenuNavWrapper = styled.div<MenuNavWrapperProps>`
     flex-direction: column;
     margin-top: 20px;
 
-    ${ pA => pA.pageActive === 'userItem' && `
+    ${(pA) => pA.pageActive === 'userItem' && `
         div:nth-child(3){
             border-right: 3px solid #003957;
         }
-    ` }
+    `}
 
-    ${ pA => pA.pageActive === 'donationHistory' && `
+    ${(pA) => pA.pageActive === 'donationHistory' && `
         div:nth-child(2){
             border-right: 3px solid #003957;
         }
-    ` }
+    `}
 
-    ${ pA => pA.pageActive === 'userInfo' && `
+    ${(pA) => pA.pageActive === 'userInfo' && `
         div:nth-child(1){
             border-right: 3px solid #003957;
         }
-    ` }
+    `}
 `;
 
 export const MenuNavItem = styled.div`

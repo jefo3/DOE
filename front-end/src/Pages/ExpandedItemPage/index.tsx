@@ -11,8 +11,6 @@ import {
 
 import NavMenu from '../../Components/NavMenu';
 
-import Shirt from '../../Images/shirt.png';
-
 import { IDonate } from '../../Store/Interfaces/donateInterfaces';
 
 const ExpandedItemPage: React.FC = () => {
@@ -37,7 +35,7 @@ const ExpandedItemPage: React.FC = () => {
       <Content>
         <MainContent>
           <ImageContainer>
-            <img src={Shirt} alt="A shirt" />
+            <img src={`http://localhost:3333/files/${donateItem.image}`} alt="A shirt" />
           </ImageContainer>
           <ItemInfoContainer>
             <h1>{donateItem.title}</h1>

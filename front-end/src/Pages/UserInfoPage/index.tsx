@@ -62,7 +62,7 @@ const UserInfoPage: React.FC = () => {
                 defaultValue={user?.name}
                 register={register}
               />
-              <small>{errors.name?.message}</small>
+              <small>{errors.name?.message as string}</small>
             </InputField>
             <InputField>
               <label htmlFor="surname">Sobrenome</label>
@@ -72,7 +72,7 @@ const UserInfoPage: React.FC = () => {
                 defaultValue={user?.surname}
                 register={register}
               />
-              <small>{errors.surname?.message}</small>
+              <small>{errors.surname?.message as string}</small>
             </InputField>
             <InputField>
               <label htmlFor="email">Email</label>
@@ -82,7 +82,7 @@ const UserInfoPage: React.FC = () => {
                 defaultValue={user?.email}
                 register={register}
               />
-              <small>{errors.email?.message}</small>
+              <small>{errors.email?.message as string}</small>
             </InputField>
             <Button type="submit">Salvar alterações</Button>
           </form>

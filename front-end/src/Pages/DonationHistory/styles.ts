@@ -56,4 +56,4 @@ export const DonationItem = styled.div`
             width: 50%;
         }
     }
-`;   
+`;

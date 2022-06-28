@@ -15,7 +15,7 @@ const NavMenu = () => (
       </Item>
     </NavLink>
 
-    <NavLink to='/usermanagement'>
+    <NavLink to="/usermanagement">
       <Item>
         <FaUserAlt size="28px" />
         <span>Info de Usuário</span>

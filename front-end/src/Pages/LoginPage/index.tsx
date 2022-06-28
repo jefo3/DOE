@@ -60,7 +60,7 @@ const LoginPage: React.FC = () => {
               autoComplete="off"
               register={register}
             />
-            <small>{errors.email?.message}</small>
+            {errors?.email && <small>{errors.email.message as string}</small> }
           </InputField>
           <InputField>
             <label htmlFor="password">Senha</label>
@@ -74,7 +74,7 @@ const LoginPage: React.FC = () => {
               handleTogglePassword={setTogglePassword}
               register={register}
             />
-            <small>{errors.password?.message}</small>
+            <small>{errors.password?.message as string}</small>
           </InputField>
           <Button type="submit">Login</Button>
         </form>

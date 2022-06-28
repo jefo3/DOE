@@ -7,7 +7,6 @@ import './database';
 import './database';
 import uploadConfig from './config/upload';
 
-
 const app = express();
 
 app.use(express.json());

@@ -59,7 +59,7 @@ export const IconsMenu = styled.div`
         cursor: pointer;
     }
 
-    svg:nth-child(3){
+    svg:nth-child(4){
         margin-left: 20px;
     }
 `;

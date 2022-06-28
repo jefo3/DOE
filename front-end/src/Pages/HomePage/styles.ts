@@ -142,29 +142,29 @@ const GridWrapper = styled.div<GridWrapperProps>`
         color: #F05656;
     }
 
-    ${ noItem => noItem.noItems && `
+    ${(noItem) => noItem.noItems && `
         grid-template-columns: 1fr;
-    ` }
+    `}
 
     @media (min-width: 1024px) and (max-width: 1439px){
         grid-template-columns: repeat(4, 1fr);
-        ${ noItem => noItem.noItems && `
+        ${(noItem) => noItem.noItems && `
             grid-template-columns: 1fr;
-        ` }
+        `}
     }
 
     @media (min-width: 768px) and (max-width: 1023px){
         grid-template-columns: repeat(3, 1fr);
-        ${ noItem => noItem.noItems && `
+        ${(noItem) => noItem.noItems && `
             grid-template-columns: 1fr;
-        ` }
+        `}
     }
 
     @media (min-width: 425px) and (max-width: 767px){
         grid-template-columns: repeat(2, 1fr);
-        ${ noItem => noItem.noItems && `
+        ${(noItem) => noItem.noItems && `
             grid-template-columns: 1fr;
-        ` }
+        `}
     }
 
     @media (min-width: 250px) and (max-width: 424px){
@@ -174,5 +174,5 @@ const GridWrapper = styled.div<GridWrapperProps>`
 
 export {
   Container, UserInfo, Logout, Content, NavWrapper, UserMenu, GridWrapper,
-  NavLinks, LinkItem,
+  NavLinks, LinkItem
 };

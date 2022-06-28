@@ -8,6 +8,7 @@ export interface ICreatDonate{
 
 export interface IDonate extends ICreatDonate{
     id: string;
+    image: string;
     tag: {
         name: string;
     };

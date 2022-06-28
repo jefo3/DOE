@@ -55,7 +55,10 @@
                 "tsx": "never"
             }
         ],
-        "jsx-a11y/label-has-associated-control": 0
+        "jsx-a11y/label-has-associated-control": 0,
+        "react/jsx-props-no-spreading": "off",
+        "react/require-default-props": "off",
+        "no-console": "off"
     },
     "settings": {
         "import/resolver": {

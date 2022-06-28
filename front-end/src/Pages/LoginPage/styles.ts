@@ -109,5 +109,5 @@ const SignUpSection = styled.div`
 `;
 
 export {
-  Container, BackgroundImage, Form, InputField, SignUpSection,
+  Container, BackgroundImage, Form, InputField, SignUpSection
 };

@@ -1,15 +1,15 @@
 /* eslint-disable no-alert */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import * as yup from 'yup';
 
-import { AiOutlineUpload } from 'react-icons/ai';
+// import { AiOutlineUpload } from 'react-icons/ai';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
-  Container, Content, ImagePreview, InputField
+  Container, Content, InputField
 } from './styles';
 
 import NavMenu from '../../Components/NavMenu';
@@ -22,7 +22,7 @@ import { createDonate } from '../../Store/Services/donateServices';
 import { useAuth } from '../../Store/Context/authContext';
 
 import { ITag } from '../../Store/Interfaces/tagsInterface';
-import { getTags } from '../../Store/Services/tagsServices';
+import getTags from '../../Store/Services/tagsServices';
 
 const schema = yup.object().shape({
   name: yup.string().required('Nome é um campo obrigatório'),
@@ -36,10 +36,6 @@ const NewDonationPage: React.FC = () => {
     resolver: yupResolver(schema)
   });
 
-  const [loadImage, setLoadImage] = useState(false);
-  const imagePreview = useRef(document.createElement('img'));
-
-  // const [imageURL, setImageURL] = useState<string>();
   const navigate = useNavigate();
   const [tags, setTags] = useState<Array<ITag>>();
   const [category, setCategory] = useState<string>('');
@@ -54,30 +50,12 @@ const NewDonationPage: React.FC = () => {
 
     createDonate(donate).then((response) => {
       if (response) {
-        navigate('/');
+        navigate('/usermanagement');
         alert('Cadastrado com sucesso');
       }
     }).catch(() => {
       alert('Não foi possível cadastrar');
     });
-  };
-
-  const handleInputFileOnChange = (e: any) => {
-    const file = e.target.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-
-      setLoadImage(true);
-
-      reader.onload = () => {
-        const readerResult: string = reader.result as string;
-        imagePreview.current.setAttribute('src', readerResult);
-        // setImageURL(readerResult);
-      };
-
-      reader.readAsDataURL(file);
-    }
   };
 
   const retrieveTags = () => getTags().then((response) => {
@@ -100,17 +78,6 @@ const NewDonationPage: React.FC = () => {
       <Content>
         <h1>Nova Doação</h1>
         <form autoComplete="off" onSubmit={handleSubmit(handleRegisterDonate)}>
-          <input onChange={handleInputFileOnChange} type="file" id="file" />
-          <label htmlFor="file">
-            <AiOutlineUpload />
-            Enviar imagem
-          </label>
-          <ImagePreview>
-            {
-              loadImage ? <img ref={imagePreview} id="imagePreview" src="" alt="Img Preview" />
-                : <span className="image-preview__default-text">Image Preview</span>
-            }
-          </ImagePreview>
           <select onChange={(e) => setCategory(e.target.value)}>
             <option value="">Selecionar categoria</option>
             {
@@ -126,7 +93,7 @@ const NewDonationPage: React.FC = () => {
               type="text"
               register={register}
             />
-            <small>{errors.name?.message}</small>
+            <small>{errors.name?.message as string}</small>
           </InputField>
           <InputField>
             <label htmlFor="description">Descrição</label>
@@ -135,7 +102,7 @@ const NewDonationPage: React.FC = () => {
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...register('description', { required: true })}
             />
-            <small>{errors.description?.message}</small>
+            <small>{errors.description?.message as string}</small>
           </InputField>
           <Button type="submit">Cadastrar</Button>
         </form>

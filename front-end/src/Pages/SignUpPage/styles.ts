@@ -107,5 +107,5 @@ const InputField = styled.div`
 `;
 
 export {
-  Container, BackgroundImage, Form, DoubleFields, InputField,
+  Container, BackgroundImage, Form, DoubleFields, InputField
 };

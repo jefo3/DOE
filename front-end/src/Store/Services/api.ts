@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 import axios from 'axios';
 
 const api = axios.create({
@@ -24,7 +25,6 @@ export const apiGet = <T>(link: string) => api.get(link).then((response) => {
   throw error;
 });
 
-// eslint-disable-next-line arrow-body-style
 export const apiPost = <T>(link: string, resquest?: T) => {
   return api.post(link, resquest).then((response) => {
     if (response.status === 200) {
@@ -36,9 +36,23 @@ export const apiPost = <T>(link: string, resquest?: T) => {
   });
 };
 
-// eslint-disable-next-line arrow-body-style
 export const apiUpdate = <T>(link: string, resquest?: T) => {
   return api.put(link, resquest).then((response) => {
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw response.status;
+  }).catch((error) => {
+    throw error;
+  });
+};
+
+export const apiPatch = <T>(link: string, resquest?: T) => {
+  return api.patch(link, resquest, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  }).then((response) => {
     if (response.status === 200) {
       return response.data;
     }

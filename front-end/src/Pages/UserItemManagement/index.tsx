@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { AiFillCheckCircle, AiFillMinusCircle } from 'react-icons/ai';
+import { AiFillCheckCircle, AiFillFileImage, AiFillMinusCircle } from 'react-icons/ai';
 import { BsPencilFill } from 'react-icons/bs';
 
 import { RiTimeFill } from 'react-icons/ri';
@@ -17,11 +17,14 @@ import {
 } from './styles';
 
 import EditModal from '../../Components/EditModal';
+import UpdateImageModal from '../../Components/UpdateImageModal';
 
 const UserItemManagement: React.FC = () => {
   const [userDonations, setUserDonations] = useState<Array<IDonate>>([]);
   const [donationItem, setDonationItem] = useState<IDonate>();
   const [openModal, setOpenModal] = useState(false);
+  const [openUpdateImageModal, setOpenUpdateImageModal] = useState(false);
+  const [donateId, setDonateId] = useState<string>();
 
   const retrievingUserDonations = () => {
     try {
@@ -60,6 +63,11 @@ const UserItemManagement: React.FC = () => {
     }
   };
 
+  const handleUpdateImage = (donationId: string) => {
+    setDonateId(donationId);
+    setOpenUpdateImageModal(true);
+  };
+
   useEffect(() => {
     retrievingUserDonations();
   }, []);
@@ -83,6 +91,10 @@ const UserItemManagement: React.FC = () => {
               <span>{userDonation.tag.name}</span>
               <span>{handleConvertingDate(userDonation.created_at)}</span>
               <IconsMenu>
+                <AiFillFileImage
+                  onClick={() => handleUpdateImage(userDonation.id)}
+                  color="#003957"
+                />
                 <AiFillMinusCircle
                   onClick={() => handleDeleteItem(userDonation.id)}
                   color="#EE3A3A"
@@ -118,14 +130,22 @@ const UserItemManagement: React.FC = () => {
           )) }
         </MainContent>
       </Content>
-      { openModal
-                && (
-                <EditModal
-                  retrievingUserDonations={retrievingUserDonations}
-                  donationItem={donationItem}
-                  setOpenModal={setOpenModal}
-                />
-                )}
+      { openModal && (
+        <EditModal
+          retrievingUserDonations={retrievingUserDonations}
+          donationItem={donationItem}
+          setOpenModal={setOpenModal}
+        />
+      )}
+
+      { openUpdateImageModal
+        && (
+        <UpdateImageModal
+          donateId={donateId as string}
+          setOpenModal={setOpenUpdateImageModal}
+        />
+        )}
+
     </Container>
   );
 };

@@ -20,7 +20,7 @@ import Input from '../../Components/Input';
 
 import { useAuth } from '../../Store/Context/authContext';
 import { getAllDonates, getDonatesByTags, getDonatesByTitle } from '../../Store/Services/donateServices';
-import { getTags } from '../../Store/Services/tagsServices';
+import getTags from '../../Store/Services/tagsServices';
 
 import { IDonate } from '../../Store/Interfaces/donateInterfaces';
 import { ITag } from '../../Store/Interfaces/tagsInterface';
@@ -48,7 +48,7 @@ const HomePage: React.FC = () => {
         setDonates(response);
       });
     } catch (error) {
-      return console.log(error);
+      return console.error(error);
     }
   };
 

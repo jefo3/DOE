@@ -5,13 +5,12 @@ import { ptBR } from 'date-fns/locale';
 import { AiFillClockCircle, AiFillShopping } from 'react-icons/ai';
 import { GoTriangleRight } from 'react-icons/go';
 
+import { motion } from 'framer-motion';
 import {
   GridItem, ImageContainer, ItemInfo, Info
 } from './styles';
 
 import { IDonate } from '../../Store/Interfaces/donateInterfaces';
-
-import Shirt from '../../Images/shirt.png';
 
 interface GridDonationItemProps{
     donate: IDonate;
@@ -26,9 +25,16 @@ const GridDonationItem: React.FC<GridDonationItemProps> = ({ donate, clicked }) 
   };
 
   return (
-    <GridItem onClick={clicked}>
+    <GridItem
+      onClick={clicked}
+      as={motion.div}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ delay: 0.25 }}
+    >
       <ImageContainer>
-        <img src={Shirt} alt="Shirt" />
+        <img src={`http://localhost:3333/files/${donate.image}`} alt="Shirt" />
       </ImageContainer>
       <ItemInfo>
         <Info>

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { ICreatDonate, IDonate } from '../Interfaces/donateInterfaces';
 import {
-  apiDelete, apiGet, apiPost, apiUpdate
+  apiDelete, apiGet, apiPatch, apiPost, apiUpdate
 } from './api';
 
 const DONATES_ROUTER = 'donates/';
@@ -20,6 +20,10 @@ export const getAllSuccessfulDonates = () => apiGet<Array<IDonate>>(`${DONATES_R
 
 export const updateDonate = (donateId: string, name: string, description: string) => {
   apiUpdate(DONATES_ROUTER + donateId, { title: name, description });
+};
+
+export const updateImageDonate = (donateId: string, file: any) => {
+  apiPatch(`${DONATES_ROUTER}image/${donateId}`, file);
 };
 
 export const updateDonateStatus = (donateId: string, status_donate: string) => {

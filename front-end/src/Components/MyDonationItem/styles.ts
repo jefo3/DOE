@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const DonationItem = styled.div`
     margin-top: 20px;
@@ -17,4 +17,3 @@ export const ButtonsContainer = styled.span`
         padding: 2px;
     }
 `;
-
