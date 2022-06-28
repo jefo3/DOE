@@ -28,7 +28,7 @@ class UpdateImageService {
       throw new Error('donate dont exist');
     }
 
-    if (donate) {
+    if (donate.image) {
       const donateImageFilePath = path.join(uploadConfig.directory, donate.image);
       const donateImageFileExists = await fs.promises.stat(donateImageFilePath);
 

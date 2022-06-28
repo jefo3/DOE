@@ -126,9 +126,8 @@ class DonateController {
   async addImage(request: Request, response: Response){
     try{
       const { id } = request.params;
-      console.log(id)
       const image = request.file?.filename as string
-      console.log(image)
+
       const donateRepository = getRepository(Donate);
 
       const donate = new UpdateImageService(donateRepository).execute({
