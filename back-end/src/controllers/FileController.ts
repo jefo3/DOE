@@ -10,13 +10,13 @@ class FileController {
             let fileData = request.files;
 
             if (!fileData) {
-                return response.status(400).json({ error: "Send alist one file" });
+                return response.status(400).json({ error: "Send at least one file" });
             }
 
             const files = fileData.data;
 
             if (Array.isArray(files) || !files) {
-                return response.status(400).json({ error: "Send alist one file" });
+                return response.status(400).json({ error: "Send at least one file" });
             }
 
 

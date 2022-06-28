@@ -10,6 +10,8 @@ import ListAllSuccessfullDonateService from '../services/donate/ListAllSuccessfu
 
 import {getRepository} from 'typeorm'
 import Donate from '../models/Donate'
+import FilterDonateByTitleService from '../services/donate/FilterDonateByTitleService';
+
 class DonateController {
   async create(request: Request, response: Response) {
     try {
@@ -102,6 +104,17 @@ class DonateController {
     try {
       const { tag_id } = request.params;
       const donates = await new FilterDonateService().execute(tag_id);
+
+      return response.json(donates);
+    } catch (error) {
+      return response.status(400).json({ error: (error as Error).message });
+    }
+  }
+
+  async filterByTitle(request: Request, response: Response){
+    try {
+      const { title } = request.params;
+      const donates = await new FilterDonateByTitleService().execute(title);
 
       return response.json(donates);
     } catch (error) {

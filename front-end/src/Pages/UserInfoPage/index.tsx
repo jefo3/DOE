@@ -14,11 +14,12 @@ import Input from '../../Components/Input';
 import Button from '../../Components/Button';
 
 import { useAuth } from '../../Store/Context/authContext';
+import { updateUser } from '../../Store/Services/userServices';
 
 const schema = yup.object().shape({
-  name: yup.string().required(),
-  surname: yup.string().required(),
-  email: yup.string().email().required()
+  name: yup.string(),
+  surname: yup.string(),
+  email: yup.string().email('Precisa ser um email válido')
 });
 
 const UserInfoPage: React.FC = () => {
@@ -28,8 +29,10 @@ const UserInfoPage: React.FC = () => {
     resolver: yupResolver(schema)
   });
 
-  const handleOnSubmit = (data: any) => {
-    console.log(data);
+  const handleOnSubmit = async (data: any) => {
+    const response = await updateUser(user?.id as string, data.name, data.surname);
+    localStorage.setItem('@App:user', JSON.stringify(response));
+    document.location.reload();
   };
 
   return (
@@ -59,17 +62,17 @@ const UserInfoPage: React.FC = () => {
                 defaultValue={user?.name}
                 register={register}
               />
-              <small>{errors?.name}</small>
+              <small>{errors.name?.message}</small>
             </InputField>
             <InputField>
               <label htmlFor="surname">Sobrenome</label>
               <Input
-                name="surnname"
+                name="surname"
                 type="text"
                 defaultValue={user?.surname}
                 register={register}
               />
-              <small>{errors?.name}</small>
+              <small>{errors.surname?.message}</small>
             </InputField>
             <InputField>
               <label htmlFor="email">Email</label>
@@ -79,7 +82,7 @@ const UserInfoPage: React.FC = () => {
                 defaultValue={user?.email}
                 register={register}
               />
-              <small>{errors?.name}</small>
+              <small>{errors.email?.message}</small>
             </InputField>
             <Button type="submit">Salvar alterações</Button>
           </form>

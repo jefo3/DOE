@@ -16,5 +16,6 @@ donates.delete('/:id', donateController.delete);
 donates.get('/feed', donateController.listAll);
 donates.get('/feed/success', donateController.listAllSuccessfull);
 donates.get('/feed/:tag_id', donateController.filterTag);
+donates.get('/donate/:title', donateController.filterByTitle);
 
 export default donates;

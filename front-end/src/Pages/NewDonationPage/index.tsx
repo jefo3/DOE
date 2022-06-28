@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -5,8 +6,10 @@ import * as yup from 'yup';
 
 import { AiOutlineUpload } from 'react-icons/ai';
 
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
-  Container, Content, ImagePreview, InputField,
+  Container, Content, ImagePreview, InputField
 } from './styles';
 
 import NavMenu from '../../Components/NavMenu';
@@ -20,20 +23,18 @@ import { useAuth } from '../../Store/Context/authContext';
 
 import { ITag } from '../../Store/Interfaces/tagsInterface';
 import { getTags } from '../../Store/Services/tagsServices';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 
 const schema = yup.object().shape({
-  name: yup.string().required("Nome é um campo obrigatório"),
-  description: yup.string().required("Descrição é um campo obrigatório"),
+  name: yup.string().required('Nome é um campo obrigatório'),
+  description: yup.string().required('Descrição é um campo obrigatório')
 });
 
 const NewDonationPage: React.FC = () => {
   const { user } = useAuth();
 
   const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(schema),
-  })
+    resolver: yupResolver(schema)
+  });
 
   const [loadImage, setLoadImage] = useState(false);
   const imagePreview = useRef(document.createElement('img'));
@@ -43,25 +44,24 @@ const NewDonationPage: React.FC = () => {
   const [tags, setTags] = useState<Array<ITag>>();
   const [category, setCategory] = useState<string>('');
 
-  const handleRegisterDonate = (data: any) =>{
+  const handleRegisterDonate = (data: any) => {
     const donate: ICreatDonate = {
       title: data.name,
       description: data.description,
       user_id: user?.id as string,
-      tag_id: category,
-    }
+      tag_id: category
+    };
 
-    createDonate(donate).then((response)=>{
-      if(response){
+    createDonate(donate).then((response) => {
+      if (response) {
         navigate('/');
-        alert("Cadastrado com sucesso");
+        alert('Cadastrado com sucesso');
       }
-    }).catch((error)=>{
-      console.log(error);
-      alert("Não foi possível cadastrar");
-    })
-  }
-  
+    }).catch(() => {
+      alert('Não foi possível cadastrar');
+    });
+  };
+
   const handleInputFileOnChange = (e: any) => {
     const file = e.target.files[0];
 
@@ -80,11 +80,9 @@ const NewDonationPage: React.FC = () => {
     }
   };
 
-  const retrieveTags = () => {
-    return getTags().then((response)  => {
-      setTags(response);  
-    });
-  }
+  const retrieveTags = () => getTags().then((response) => {
+    setTags(response);
+  });
 
   useEffect(() => {
     retrieveTags();
@@ -92,11 +90,11 @@ const NewDonationPage: React.FC = () => {
 
   return (
     <Container
-      as={motion.div} 
+      as={motion.div}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition= {{ delay: 0.25 }}
+      transition={{ delay: 0.25 }}
     >
       <NavMenu />
       <Content>
@@ -113,10 +111,10 @@ const NewDonationPage: React.FC = () => {
                 : <span className="image-preview__default-text">Image Preview</span>
             }
           </ImagePreview>
-          <select onChange={(e)=> setCategory(e.target.value)}>
+          <select onChange={(e) => setCategory(e.target.value)}>
             <option value="">Selecionar categoria</option>
             {
-              tags?.map(tag => (
+              tags?.map((tag) => (
                 <option key={tag.id} value={tag.id}>{tag.name}</option>
               ))
             }
@@ -124,16 +122,17 @@ const NewDonationPage: React.FC = () => {
           <InputField>
             <label htmlFor="name">Nome</label>
             <Input
-              name="name" 
+              name="name"
               type="text"
-              register={register} 
+              register={register}
             />
             <small>{errors.name?.message}</small>
           </InputField>
           <InputField>
             <label htmlFor="description">Descrição</label>
-            <textarea 
-              id="description" 
+            <textarea
+              id="description"
+              // eslint-disable-next-line react/jsx-props-no-spreading
               {...register('description', { required: true })}
             />
             <small>{errors.description?.message}</small>

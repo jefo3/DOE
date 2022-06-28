@@ -11,6 +11,10 @@ export interface IDonate extends ICreatDonate{
     tag: {
         name: string;
     };
+    user: {
+        name: string;
+        email: string;
+    };
     created_at: string;
     updated_at: string;
     status_donate: string;

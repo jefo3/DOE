@@ -1,36 +1,29 @@
-import { ICreatDonate, IDonate } from "../Interfaces/donateInterfaces";
-import { apiDelete, apiGet, apiPost, apiUpdate } from "./api";
+/* eslint-disable camelcase */
+import { ICreatDonate, IDonate } from '../Interfaces/donateInterfaces';
+import {
+  apiDelete, apiGet, apiPost, apiUpdate
+} from './api';
 
 const DONATES_ROUTER = 'donates/';
 
-export const createDonate = (donate: ICreatDonate) =>{
-    return apiPost<ICreatDonate>(DONATES_ROUTER, donate);
-}
+export const createDonate = (donate: ICreatDonate) => apiPost<ICreatDonate>(DONATES_ROUTER, donate);
 
-export const getDonatesByIdUser = () =>{
-    return apiGet<Array<IDonate>>(DONATES_ROUTER);
-}
+export const getDonatesByIdUser = () => apiGet<Array<IDonate>>(DONATES_ROUTER);
 
-export const getDonatesByTags = (tagId: string) =>{
-    return apiGet<Array<IDonate>>(DONATES_ROUTER+'/feed/'+tagId);
-}
+export const getDonatesByTags = (tagId: string) => apiGet<Array<IDonate>>(`${DONATES_ROUTER}/feed/${tagId}`);
 
-export const getAllDonates = () => {
-    return apiGet<Array<IDonate>>(DONATES_ROUTER+'/feed');
-};
+export const getDonatesByTitle = (title: string) => apiGet<Array<IDonate>>(`${DONATES_ROUTER}donate/${title}`);
 
-export const getAllSuccessfulDonates = () => {
-    return apiGet<Array<IDonate>>(DONATES_ROUTER+'/feed/success');
-};
+export const getAllDonates = () => apiGet<Array<IDonate>>(`${DONATES_ROUTER}feed`);
+
+export const getAllSuccessfulDonates = () => apiGet<Array<IDonate>>(`${DONATES_ROUTER}/feed/success`);
 
 export const updateDonate = (donateId: string, name: string, description: string) => {
-    return apiUpdate(DONATES_ROUTER+donateId, {title: name, description});
-}
+  apiUpdate(DONATES_ROUTER + donateId, { title: name, description });
+};
 
 export const updateDonateStatus = (donateId: string, status_donate: string) => {
-    return apiUpdate(DONATES_ROUTER+donateId, { status_donate });
-}
+  apiUpdate(DONATES_ROUTER + donateId, { status_donate });
+};
 
-export const deleteDonate = (idDonate: string) =>{
-    return apiDelete(DONATES_ROUTER+idDonate);
-}
+export const deleteDonate = (idDonate: string) => apiDelete(DONATES_ROUTER + idDonate);

@@ -33,8 +33,8 @@ class Donate {
   status_donate: string;
 
   @JoinColumn({ name: 'user_id' })
-  @OneToMany(() => User, user => user.id)
-  users: User[];
+  @OneToOne(() => User, user => user.id)
+  user: User;
 
   @JoinColumn({ name: 'tag_id' })
   @OneToOne(() => Tag, tag => tag.id)
