@@ -36,7 +36,7 @@ const SignUpPage: React.FC = () => {
 
   const handleRegister = (data: any) => {
     const user: ICreateUser = {
-      name: data.fistName,
+      name: data.firstName,
       surname: data.lastName,
       email: data.email,
       password: data.password

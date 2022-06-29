@@ -42,13 +42,12 @@ const HomePage: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const retrievingDonates = () => {
+  const retrievingDonates = async () => {
     try {
-      return getAllDonates().then((response) => {
-        setDonates(response);
-      });
+      const response = await getAllDonates();
+      setDonates(response);
     } catch (error) {
-      return console.error(error);
+      console.error(error);
     }
   };
 
@@ -59,13 +58,11 @@ const HomePage: React.FC = () => {
 
   const handleSelectOnChange = async (e: any) => {
     e.preventDefault();
-
     if (e.target.value === 'all') {
       retrievingDonates();
     } else {
       const tagId = e.target.value;
       const response = await getDonatesByTags(tagId);
-
       if (response.length === 0) {
         setNoItems(true);
       } else {
@@ -148,11 +145,11 @@ const HomePage: React.FC = () => {
         <GridWrapper noItems={noItems}>
           <select onChange={handleSelectOnChange}>
             <option value="all">Mostrar todos</option>
-            { tags?.map((tag) => (
+            {tags?.map((tag) => (
               <option key={tag.id} value={tag.id}>{tag.name}</option>
-            )) }
+            ))}
           </select>
-          { noItems ? (
+          {noItems ? (
             <p>
               <BiErrorCircle />
               {' '}

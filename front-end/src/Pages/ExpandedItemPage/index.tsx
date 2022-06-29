@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { motion } from 'framer-motion';
@@ -12,10 +12,22 @@ import {
 import NavMenu from '../../Components/NavMenu';
 
 import { IDonate } from '../../Store/Interfaces/donateInterfaces';
+import { getUserById } from '../../Store/Services/userServices';
+import { IUser } from '../../Store/Interfaces/userInterfaces';
 
 const ExpandedItemPage: React.FC = () => {
   const location = useLocation();
   const donateItem = location.state as IDonate;
+  const [user, setUser] = useState<IUser>();
+
+  useEffect(() => {
+    if (donateItem && donateItem.user_id) {
+      const id = donateItem.user_id;
+      getUserById(id).then((response) => {
+        setUser(response);
+      });
+    }
+  }, [donateItem]);
 
   const handleConvertTime = (time: any) => {
     const date = parseISO(time);
@@ -41,7 +53,7 @@ const ExpandedItemPage: React.FC = () => {
             <h1>{donateItem.title}</h1>
             <p>{donateItem.description}</p>
             <span>{handleConvertTime(donateItem.created_at)}</span>
-            <a href={`mailto:${donateItem.user.email}?subject=${'Tenho interesse nessa doação!'}`}>Entrar em contato</a>
+            {user && <a href={`mailto:${user.email}?subject='Olá, ${user.name} tenho interesse nessa doação!'`}>Entrar em contato</a>}
           </ItemInfoContainer>
         </MainContent>
       </Content>
