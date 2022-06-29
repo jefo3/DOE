@@ -11,7 +11,7 @@ export const LogOutUser = async () => apiLogOut(`${USER_ROUTER}/logout`);
 
 export const createUser = (user: ICreateUser) => apiPost<ICreateUser>(USER_ROUTER, user);
 
-export const getUserById = (idUser: ICreateUser) => apiGet<IUser>(`${USER_ROUTER}/${idUser}`);
+export const getUserById = (idUser: string) => apiGet<IUser>(`${USER_ROUTER}/${idUser}`);
 
 export const updateUser = async (idUser: string, name?: string, surname?: string, email?: string) => apiUpdate(`${USER_ROUTER}${idUser}`, { name, surname, email });
 

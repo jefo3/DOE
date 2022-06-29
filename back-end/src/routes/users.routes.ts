@@ -9,5 +9,6 @@ users.post('/', userController.create);
 users.put('/:id', userController.update);
 users.delete('/:id', userController.delete);
 users.get('/', userController.list);
+users.get('/:id', userController.filterById);
 
 export default users;

@@ -6,6 +6,7 @@ import DeleteUserService from '../services/user/DeleteUserService';
 import ListUserService from '../services/user/ListUserService';
 import { getRepository } from 'typeorm';
 import User from '../models/User';
+import FilterByIdService from '../services/user/FilterByIdService';
 
 class UserController {
   async create(request: Request, response: Response) {
@@ -13,7 +14,10 @@ class UserController {
       const { name, surname, email, password } = request.body;
 
       const userRepository = getRepository(User);
-
+      console.log(name,
+        surname,
+        email,
+        password,)
       const user = await new CreateUserService(userRepository).execute({
         name,
         surname,
@@ -68,6 +72,18 @@ class UserController {
     const userRepository = getRepository(User);
     const users = await new ListUserService(userRepository).execute();
     return response.json(users);
+  }
+
+  async filterById(request: Request, response: Response) {
+    try {
+      const { id } = request.params;
+      const userRepository = getRepository(User);
+      const donates = await new FilterByIdService(userRepository).execute({id});
+
+      return response.json(donates);
+    } catch (error) {
+      return response.status(400).json({ error: (error as Error).message });
+    }
   }
 }
 

@@ -14,7 +14,7 @@ export const getDonatesByTags = (tagId: string) => apiGet<Array<IDonate>>(`${DON
 
 export const getDonatesByTitle = (title: string) => apiGet<Array<IDonate>>(`${DONATES_ROUTER}donate/${title}`);
 
-export const getAllDonates = () => apiGet<Array<IDonate>>(`${DONATES_ROUTER}feed`);
+export const getAllDonates = () => apiGet<Array<IDonate>>(`${DONATES_ROUTER}/feed`);
 
 export const getAllSuccessfulDonates = () => apiGet<Array<IDonate>>(`${DONATES_ROUTER}/feed/success`);
 

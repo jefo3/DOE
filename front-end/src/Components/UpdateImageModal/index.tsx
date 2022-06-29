@@ -38,12 +38,14 @@ const UpdateImageModal: React.FC<IUpdateImageModal> = ({ donateId, setOpenModal 
   };
 
   const handleSubmitImage = async () => {
-    const formData = new FormData();
-    formData.append('teste', imageFile);
-    await updateImageDonate(donateId, formData);
-    setOpenModal(false);
-    document.location.reload();
-    navigate('/');
+    if (imageFile) {
+      const formData = new FormData();
+      formData.append('teste', imageFile);
+      await updateImageDonate(donateId, formData);
+      setOpenModal(false);
+      document.location.reload();
+      navigate('/');
+    }
   };
 
   return (

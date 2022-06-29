@@ -86,8 +86,13 @@ class DonateController {
 
   async listAll(request: Request, response: Response) {
     try {
+<<<<<<< HEAD
       const donateRepository = getRepository(Donate);
       const donates = await new ListAllDonateService(donateRepository).execute();
+=======
+      const { id: user_id } = request.user;
+      const donates = await new ListAllDonateService().execute(user_id);
+>>>>>>> b2f1a634c670b7362f057aaa10e89931c460215a
 
       return response.json(donates);
     } catch (error) {
@@ -97,8 +102,11 @@ class DonateController {
 
   async listAllSuccessfull(request: Request, response: Response) {
     try {
+
       const donateRepository = getRepository(Donate);
-      const donates = await new ListAllSuccessfullDonateService(donateRepository).execute();
+      const { id: user_id } = request.user;
+      const donates = await new ListAllSuccessfullDonateService(donateRepository).execute(user_id);
+
 
       return response.json(donates);
     } catch (error) {
@@ -108,9 +116,11 @@ class DonateController {
 
   async filterTag(request: Request, response: Response) {
     try {
+      const { id: user_id } = request.user;
       const { tag_id } = request.params;
+
       const donateRepository = getRepository(Donate);
-      const donates = await new FilterDonateService(donateRepository).execute(tag_id);
+      const donates = await new FilterDonateService(donateRepository).execute(tag_id, user_id);
 
       return response.json(donates);
     } catch (error) {
