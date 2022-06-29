@@ -25,7 +25,6 @@ class UpdateDonateService {
     tag_id,
     status_donate,
   }: Request): Promise<Donate> {
-    //const donateRepository = getRepository(Donate);
 
     const donate = await this.donateRepository.findOne(id);
 
