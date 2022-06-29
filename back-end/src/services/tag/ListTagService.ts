@@ -1,13 +1,23 @@
-import { getRepository } from 'typeorm';
+import { FindManyOptions, getRepository } from 'typeorm';
 
 import Tag from '../../models/Tag';
 
-class ListTagService {
-  public async execute(): Promise<Tag[]> {
-    const tagRepository = getRepository(Tag);
-    const tags = await tagRepository.find();
+interface ITagRepository{
+  find(options?: FindManyOptions<Tag> | undefined): Promise<Tag[]>
+}
 
-    return tags;
+class ListTagService {
+
+  constructor(private tagRepository: ITagRepository){}
+
+  public async execute(): Promise<Tag[]> {
+    try {
+      const tags = await this.tagRepository.find();
+      return tags;
+    } catch (error) {
+      if (error) throw error;
+      throw new Error('Internal server error');
+    }
   }
 }
 

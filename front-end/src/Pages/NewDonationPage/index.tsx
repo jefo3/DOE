@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import * as yup from 'yup';
 
-// import { AiOutlineUpload } from 'react-icons/ai';
-
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {

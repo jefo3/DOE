@@ -16,7 +16,6 @@ import UpdateImageService from '../services/donate/UpdateImageService';
 class DonateController {
   async create(request: Request, response: Response) {
     try {
-
       const { title, description, tag_id } = request.body;
       const { id: user_id } = request.user;
       const status_donate = 'pending';

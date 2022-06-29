@@ -35,7 +35,6 @@ describe('Donate', () => {
       id: "8e9c96dd-2299-4aca-b4c5-2938d240cc5d",
       created_at: "2022-05-24T18:30:54.376Z",
       updated_at: "2022-05-24T18:30:54.376Z"
-
     }
 
     donateRepositoryInMemory.create.mockReturnValue(Promise.resolve(donateOutputMock));

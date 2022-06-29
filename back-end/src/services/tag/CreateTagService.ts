@@ -1,5 +1,3 @@
-import { getRepository } from 'typeorm';
-
 import Tag from '../../models/Tag';
 
 interface Request {
@@ -17,17 +15,23 @@ class CreateTagService {
 
   public async execute({ name }: Request): Promise<Tag> {
 
-    if (!name) {
-      throw new Error('value empty');
+    try {
+      if (!name) {
+        throw new Error('value empty');
+      }
+
+      const tag = await this.tagRepository.create({
+        name,
+      });
+
+      await this.tagRepository.save(tag);
+
+      return tag;
+    } catch (error) {
+      if (error) throw error;
+      throw new Error('Internal server error');
     }
 
-    const tag = await this.tagRepository.create({
-      name,
-    });
-
-    await this.tagRepository.save(tag);
-
-    return tag;
   }
 }
 

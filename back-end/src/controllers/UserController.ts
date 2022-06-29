@@ -69,9 +69,13 @@ class UserController {
   }
 
   async list(request: Request, response: Response) {
-    const userRepository = getRepository(User);
-    const users = await new ListUserService(userRepository).execute();
-    return response.json(users);
+    try {
+      const userRepository = getRepository(User);
+      const users = await new ListUserService(userRepository).execute();
+      return response.json(users);
+    } catch (error) {
+      return response.status(400).json({ error: (error as Error).message });
+    }
   }
 
   async filterById(request: Request, response: Response) {

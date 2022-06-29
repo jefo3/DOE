@@ -1,4 +1,4 @@
-import { getRepository } from 'typeorm';
+import { FindOneOptions, getRepository, ObjectID, SaveOptions } from 'typeorm';
 import Tag from '../../models/Tag';
 
 interface Request {
@@ -6,24 +6,36 @@ interface Request {
   name?: string;
 }
 
+interface ITagRepository{
+  findOne(id?: string | number | Date | ObjectID | undefined, options?: FindOneOptions<Tag> | undefined): Promise<Tag | undefined>;
+  save(entity: Tag, options?: SaveOptions | undefined): Promise<Tag>;
+}
+
 class UpdateTagService {
+
+  constructor(private tagRepository: ITagRepository){}
+
   public async execute({ id, name }: Request): Promise<Tag> {
-    const tagRepository = getRepository(Tag);
+    try {
+      const tag = await this.tagRepository.findOne(id);
 
-    const tag = await tagRepository.findOne(id);
+      if (!tag) {
+        throw new Error(`Tag doesn't exist`);
+      }
 
-    if (!tag) {
-      throw new Error('Tag dont exist');
+      if (name) {
+        tag.name = name;
+      }
+
+      await this.tagRepository.save(tag);
+
+      return tag;
+    } catch (error) {
+      if (error) throw error;
+      throw new Error('Internal server error!')
     }
-
-    if (name) {
-      tag.name = name;
-    }
-
-    await tagRepository.save(tag);
-
-    return tag;
   }
+
 }
 
 export default UpdateTagService;

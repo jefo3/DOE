@@ -29,7 +29,9 @@ class TagController {
       const { name } = request.body;
       const { id } = request.params;
 
-      const tagUpdate = await new UpdateTagService().execute({
+      const tagRepository = getRepository(Tag);
+
+      const tagUpdate = await new UpdateTagService(tagRepository).execute({
         name,
         id,
       });
@@ -44,7 +46,9 @@ class TagController {
     try {
       const { id } = request.params;
 
-      const tagDelete = await new DeleteTagService().execute({
+      const tagRepository = getRepository(Tag);
+
+      const tagDelete = await new DeleteTagService(tagRepository).execute({
         id,
       });
 
@@ -56,7 +60,10 @@ class TagController {
 
   async list(request: Request, response: Response) {
     try {
-      const tags = await new ListTagService().execute();
+
+      const tagRepository = getRepository(Tag);
+
+      const tags = await new ListTagService(tagRepository).execute();
 
       return response.json(tags);
     } catch (error) {

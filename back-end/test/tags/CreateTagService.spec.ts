@@ -1,7 +1,7 @@
 import CreateTagService from "../../src/services/tag/CreateTagService";
 import { tagRepositoryInMemory } from "./mock/CreateTagService";
 
-describe('Create User', () => {
+describe('Create Tag', () => {
   let createTagService: CreateTagService;
 
   beforeEach(() => {
@@ -12,7 +12,7 @@ describe('Create User', () => {
     jest.clearAllMocks();
   })
 
-  it('should define CreateUserServie', () => {
+  it('should define CreateUpdateService', () => {
     expect(createTagService).toBeDefined();
   });
 
@@ -46,5 +46,32 @@ describe('Create User', () => {
     expect(tagRepositoryInMemory.save).toHaveBeenCalledTimes(1);
   });
 
+  it('should not be able to create a new tag when name is empty', async () => {
+    const tagInputMock = {
+      name: '',
+    };
+
+    try {
+      await createTagService.execute({ ...tagInputMock });
+    } catch (error) {
+      expect((error as Error).message).toBe('value empty');
+    }
+
+  });
+
+  it('should not be able to create a new user when occur a server internal error', async () => {
+    const tagInputMock = {
+      name: 'Utensílios',
+    };
+
+    tagRepositoryInMemory.create.mockReturnValue(() => Promise.reject());
+    tagRepositoryInMemory.save.mockImplementation(() => Promise.reject());
+
+    try {
+      await createTagService.execute({ ...tagInputMock });
+    } catch (error) {
+      expect((error as Error).message).toBe('Internal server error');
+    }
+  });
 
 });
