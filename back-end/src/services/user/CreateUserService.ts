@@ -1,6 +1,5 @@
 import { FindOneOptions, getRepository, Repository } from 'typeorm';
 import { hash } from 'bcryptjs';
-import { injectable, inject } from 'tsyringe';
 
 import User from '../../models/User';
 
