@@ -83,7 +83,8 @@ class DonateController {
 
   async listAll(request: Request, response: Response) {
     try {
-      const donates = await new ListAllDonateService().execute();
+      const { id: user_id } = request.user;
+      const donates = await new ListAllDonateService().execute(user_id);
 
       return response.json(donates);
     } catch (error) {
@@ -93,7 +94,8 @@ class DonateController {
 
   async listAllSuccessfull(request: Request, response: Response) {
     try {
-      const donates = await new ListAllSuccessfullDonateService().execute();
+      const { id: user_id } = request.user;
+      const donates = await new ListAllSuccessfullDonateService().execute(user_id);
 
       return response.json(donates);
     } catch (error) {
@@ -103,8 +105,9 @@ class DonateController {
 
   async filterTag(request: Request, response: Response) {
     try {
+      const { id: user_id } = request.user;
       const { tag_id } = request.params;
-      const donates = await new FilterDonateService().execute(tag_id);
+      const donates = await new FilterDonateService().execute(tag_id, user_id);
 
       return response.json(donates);
     } catch (error) {
