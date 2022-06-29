@@ -1,4 +1,3 @@
-import { compare, hash } from "bcryptjs";
 import UpdateDonateService from "../../src/services/donate/UpdateDonateService";
 import { donateRepositoryInMemory } from "./mocks/UpdateDonateMock";
 
