@@ -1,9 +1,9 @@
-import { getRepository } from 'typeorm';
+import { getRepository, FindManyOptions } from 'typeorm';
 
 import Donate from '../../models/Donate';
 
 interface IDonateRepository{
-  find({}): Promise<Donate[]>
+  find(options?: FindManyOptions<Donate> | undefined): Promise<Donate[]>
 }
 
 class ListDonateService {
