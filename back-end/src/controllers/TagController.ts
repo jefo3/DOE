@@ -4,13 +4,17 @@ import CreateTagService from '../services/tag/CreateTagService';
 import UpdateTagService from '../services/tag/UpdateTagService';
 import DeleteTagService from '../services/tag/DeleteTagService';
 import ListTagService from '../services/tag/ListTagService';
+import { getRepository } from 'typeorm';
+import Tag from '../models/Tag';
 
 class TagController {
   async create(request: Request, response: Response) {
     try {
       const { name } = request.body;
 
-      const tag = await new CreateTagService().execute({
+      const tagRepository = getRepository(Tag);
+
+      const tag = await new CreateTagService(tagRepository).execute({
         name,
       });
 

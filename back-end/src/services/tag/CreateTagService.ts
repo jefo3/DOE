@@ -6,19 +6,26 @@ interface Request {
   name: string;
 }
 
+interface ITagRepository{
+  create(tag: Request): Promise<Tag>;
+  save(tag: Request): Promise<Tag>;
+}
+
 class CreateTagService {
+
+  constructor(private tagRepository: ITagRepository){}
+
   public async execute({ name }: Request): Promise<Tag> {
-    const tagRepository = getRepository(Tag);
 
     if (!name) {
-      throw new Error('value empaty');
+      throw new Error('value empty');
     }
 
-    const tag = tagRepository.create({
+    const tag = await this.tagRepository.create({
       name,
     });
 
-    await tagRepository.save(tag);
+    await this.tagRepository.save(tag);
 
     return tag;
   }
