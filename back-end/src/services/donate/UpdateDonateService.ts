@@ -1,4 +1,4 @@
-import { getRepository } from 'typeorm';
+import { getRepository, FindOneOptions } from 'typeorm';
 import { hash } from 'bcryptjs';
 
 import Donate from '../../models/Donate';
@@ -8,10 +8,16 @@ interface Request {
   description?: string;
   tag_id?: string;
   id: string;
-  status_donate: string;
+  status_donate?: string;
+}
+
+interface IDonateRepository{
+  findOne(id:string): Promise<Donate | undefined>;
+  save(donate: Request): Promise<Donate>;
 }
 
 class UpdateDonateService {
+  constructor(private donateRepository: IDonateRepository){}
   public async execute({
     title,
     description,
@@ -19,9 +25,9 @@ class UpdateDonateService {
     tag_id,
     status_donate,
   }: Request): Promise<Donate> {
-    const donateRepository = getRepository(Donate);
+    //const donateRepository = getRepository(Donate);
 
-    const donate = await donateRepository.findOne(id);
+    const donate = await this.donateRepository.findOne(id);
 
     if (!donate) {
       throw new Error('donate dont exist');
@@ -43,7 +49,7 @@ class UpdateDonateService {
       donate.status_donate = status_donate;
     }
 
-    await donateRepository.save(donate);
+    await this.donateRepository.save(donate);
 
     return donate;
   }

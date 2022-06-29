@@ -63,32 +63,4 @@ describe('Donate', () => {
     expect(donateRepositoryInMemory.create).toHaveBeenCalledTimes(1);
     expect(donateRepositoryInMemory.save).toHaveBeenCalledTimes(1);
   });
-
-  // it('should not create a new donate', async () => {
-  //   const donateInputMock = {
-  //     name: 'Joao',
-  //     surname: 'Carlos',
-  //     email: 'joaocarlos@gmail.com',
-  //     password: 'joaoca123',
-  //   };
-
-  //   const donateOutputMock = {
-  //     name: "Joao",
-  //     surname: "Carlos",
-  //     email: "joaocarlos@gmail.com",
-  //     password: "$2a$08$acay3LLE.eiYE0csYI79/eSmiI7J/.RTodbFIhf9g/K1DPMB7GX4K",
-  //     image_id: null,
-  //     id: "6aa17cb9-592b-498c-ad48-ad32d0636e2c",
-  //     created_at: "2022-06-22T04:29:55.018Z",
-  //     updated_at: "2022-06-22T04:29:55.018Z"
-  //   }
-
-  //   donateRepositoryInMemory.findOne.mockReturnValueOnce(Promise.resolve(donateOutputMock));
-
-  //   try {
-  //     await createDonateService.execute({ ...donateInputMock });
-  //   } catch (error) {
-  //     expect((error as Error).message).toBe('email address already used');
-  //   }
-  // })
 });

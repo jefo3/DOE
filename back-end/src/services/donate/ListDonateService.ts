@@ -2,10 +2,16 @@ import { getRepository } from 'typeorm';
 
 import Donate from '../../models/Donate';
 
+interface IDonateRepository{
+  find({}): Promise<Donate[]>
+}
+
 class ListDonateService {
+  constructor(private donateRepository: IDonateRepository){}
+
   public async execute(user_id: string): Promise<Donate[]> {
-    const donateRepository = getRepository(Donate);
-    const donates = await donateRepository.find({
+
+    const donates = await this.donateRepository.find({
       where: { user_id },
       relations: ['tag'],
     });
