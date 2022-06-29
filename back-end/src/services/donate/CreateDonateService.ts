@@ -23,18 +23,22 @@ class CreateDonateService {
     tag_id,
     status_donate,
   }: Request): Promise<Donate> {
+    try{
+      const donate = await this.donateRepository.create({
+        title,
+        description,
+        user_id,
+        tag_id,
+        status_donate,
+      });
 
-    const donate = await this.donateRepository.create({
-      title,
-      description,
-      user_id,
-      tag_id,
-      status_donate,
-    });
+      await this.donateRepository.save(donate);
 
-    await this.donateRepository.save(donate);
-
-    return donate;
+      return donate;
+    }catch(error){
+      if (error as Error) throw error;
+      throw new Error('Internal server error, please try again');
+    }
   }
 }
 

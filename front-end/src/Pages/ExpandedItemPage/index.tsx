@@ -53,7 +53,7 @@ const ExpandedItemPage: React.FC = () => {
             <h1>{donateItem.title}</h1>
             <p>{donateItem.description}</p>
             <span>{handleConvertTime(donateItem.created_at)}</span>
-            {user && <a href={`mailto:${user.email}?subject='Olá, ${user.name} tenho interesse nessa doação!'`}>Entrar em contato</a>}
+            {user && <a href={`mailto:${user.email}?subject='Olá, ${user.name} tenho interesse nessa doação ${donateItem.title}!'`}>Entrar em contato</a>}
           </ItemInfoContainer>
         </MainContent>
       </Content>

@@ -60,6 +60,7 @@ const HomePage: React.FC = () => {
     e.preventDefault();
     if (e.target.value === 'all') {
       retrievingDonates();
+      setNoItems(false);
     } else {
       const tagId = e.target.value;
       const response = await getDonatesByTags(tagId);
